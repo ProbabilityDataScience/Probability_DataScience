@@ -20,11 +20,13 @@ public class Manager : MonoBehaviour {
 	// 시뮬 시작
 	public void StartSimulation()
 	{
-		rateGraphPanel.endCount = 10000;
+		// 그래프 초기화
+		rateGraphPanel.Init(10000, -1, 80.0f, 110.0f);
 
 		startMoney = player.money;
 		for(int i=0; i<10000; i++) {
 			machine.Run(player);
+			rateGraphPanel.DrawGraph((float)player.money / (float)startMoney * 100.0f, i+1);
 		}
 		endMoney = player.money;
 		Debug.Log("Current Money: " + endMoney);
