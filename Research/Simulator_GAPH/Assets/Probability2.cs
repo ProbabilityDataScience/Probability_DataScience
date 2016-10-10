@@ -5,8 +5,6 @@ public class Probability2 : MonoBehaviour
 {
 
 	int[,] dataDisplay = new int[3, 3];
-	int[,] dataDisplay2 = new int[3, 3];
-	int[,] dataDisplay3 = new int[3, 3];
 
 	/* dataset-1 ( very hight return )
 	 *   1              2           3          4             5      
