@@ -20,6 +20,7 @@ public class Manager : MonoBehaviour {
 	// 시뮬 시작
 	public void StartSimulation()
 	{
+		player.money = 30000;
 		// 그래프 초기화
 		rateGraphPanel.Init(10000, -1, 80.0f, 110.0f);
 

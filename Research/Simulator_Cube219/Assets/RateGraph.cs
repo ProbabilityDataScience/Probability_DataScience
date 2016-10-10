@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class RateGraph : MonoBehaviour {
 
 	public Sprite image;
+	public Text[] heightNumbers;
+	public Text[] widthNumbers;
 
 	private float minRate;
 	private float maxRate;
@@ -36,6 +38,14 @@ public class RateGraph : MonoBehaviour {
 		this.interval = interval;
 		this.minRate = minRate;
 		this.maxRate = maxRate;
+
+		// 눈금 표시
+		for(int i=0; i<heightNumbers.Length; i++) {
+			heightNumbers[i].text = ((maxRate - minRate) / (heightNumbers.Length-1) * i + minRate) + " -";
+		}
+		for(int i=0; i<widthNumbers.Length; i++) {
+			widthNumbers[i].text = "l\n" + (int)((float)endCount / (float)(widthNumbers.Length-1) * (float)i);
+		}
 
 		hasPreviousPoint = false;
 	}
