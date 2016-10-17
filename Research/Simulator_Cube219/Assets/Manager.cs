@@ -7,30 +7,65 @@ public class Manager : MonoBehaviour {
 	public Player player;
 	public Machine machine;
 
-	public Graph rateGraphPanel;
+	public Graph graphPanel;
+	public bool useRateGraph = false;
+	public bool useMoneyGraph = true;
 
 	private int startMoney;
 	private int endMoney;
+	private int currentCount;
+
+	private bool isShowGraph = false;
 
 	void Start()
 	{
 		machine.Init();
+		graphPanel.GetComponent<CanvasGroup>().alpha = 0;
+
+		StartSimulation();
+	}
+
+	void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.Escape)) {
+			if(isShowGraph == true) {
+				graphPanel.GetComponent<CanvasGroup>().alpha = 0;
+				isShowGraph = false;
+			} else {
+				graphPanel.GetComponent<CanvasGroup>().alpha = 1;
+				isShowGraph = true;
+			}
+		}
 	}
 
 	// 시뮬 시작
 	public void StartSimulation()
 	{
 		player.money = 30000;
+
 		// 그래프 초기화
-		rateGraphPanel.Init(80.0f, 110.0f, 0, 1000);
+		if(useRateGraph)
+			graphPanel.Init(80.0f, 110.0f, 0, 10000, 20);
+		if(useMoneyGraph)
+			graphPanel.Init(20000, 40000, 0, 10000, 20);
 
 		startMoney = player.money;
-		for(int i=0; i<1000; i++) {
+		currentCount = 0;
+	}
+
+	// 시뮬함
+	public void Simulate(int count)
+	{
+		for(int i = 0; i < count; i++) {
 			machine.Run(player);
-			rateGraphPanel.DrawGraph(i+1, (float)(player.money) / (float)startMoney * 100.0f);
+			currentCount++;
+
+			if(useRateGraph)
+				graphPanel.DrawGraph(currentCount, (float)(player.money) / (float)startMoney * 100.0f);
+			if(useMoneyGraph)
+				graphPanel.DrawGraph(currentCount, player.money);
 		}
-		endMoney = player.money;
-		Debug.Log("Current Money: " + endMoney);
-		Debug.Log("Collect Rate: " + ((float)endMoney / (float)startMoney * 100.0f));
+		Debug.Log("Current Money: " + player.money);
+		Debug.Log("Current Collect Rate: " + ((float)player.money / (float)startMoney * 100.0f));
 	}
 }
