@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-// Interval 기능 추가
-public class RateGraph : MonoBehaviour {
+
+public class Graph : MonoBehaviour {
 
 	public Sprite image;
 	public Text[] heightNumbers;
 	public Text[] widthNumbers;
 
-	private float minRate;
-	private float maxRate;
-	private int endCount;
+	private float minHeightValue;
+	private float maxHeightValue;
+	private float minWidthValue;
+	private float maxWidthValue;
 	private int interval;
 
 	private float width, height;
@@ -27,7 +28,7 @@ public class RateGraph : MonoBehaviour {
 	}
 
 	// 초기화
-	public void Init(int endCount, int interval = -1, float minRate = 50.0f, float maxRate = 150.0f)
+	public void Init(float minHeightValue, float maxHeightValue, float minWidthValue, float maxWidthValue, int interval = -1)
 	{
 		// 선들 다 지움
 		foreach(GameObject g in lines) {
@@ -35,17 +36,18 @@ public class RateGraph : MonoBehaviour {
 		}
 		lines.Clear();
 
-		this.endCount = endCount;
+		this.minHeightValue = minHeightValue;
+		this.maxHeightValue = maxHeightValue;
+		this.minWidthValue = minWidthValue;
+		this.maxWidthValue = maxWidthValue;
 		this.interval = interval;
-		this.minRate = minRate;
-		this.maxRate = maxRate;
 
-		// 눈금 표시
-		for(int i=0; i<heightNumbers.Length; i++) {
-			heightNumbers[i].text = ((maxRate - minRate) / (heightNumbers.Length-1) * i + minRate) + " -";
+		// 눈금 수치 표시
+		for(int i = 0; i < heightNumbers.Length; i++) {
+			heightNumbers[i].text = ((maxHeightValue- minHeightValue) / (heightNumbers.Length - 1) * i + minHeightValue) + " -";
 		}
-		for(int i=0; i<widthNumbers.Length; i++) {
-			widthNumbers[i].text = "l\n" + (int)((float)endCount / (float)(widthNumbers.Length-1) * (float)i);
+		for(int i = 0; i < widthNumbers.Length; i++) {
+			widthNumbers[i].text = "l\n" + ((maxWidthValue - minWidthValue) / (widthNumbers.Length - 1) * i + minWidthValue);
 		}
 
 		hasPreviousPoint = false;
@@ -54,20 +56,22 @@ public class RateGraph : MonoBehaviour {
 	}
 
 	// 그래프를 그림
-	public void DrawGraph(float rate, int tryCount)
+	public void DrawGraph(float widthValue, float heightValue)
 	{
 		// 값의 점 계산
 		Vector2 point;
-		point.x = (float)tryCount / (float)endCount * width - (width / 2.0f);
-		point.y = (rate-minRate) / (maxRate - minRate) * height - (height / 2.0f);
-
+		point.x = (widthValue - minWidthValue) / (maxWidthValue - minWidthValue) * width - (width / 2.0f);
+		point.y = (heightValue - minHeightValue) / (maxHeightValue - minHeightValue) * height - (height / 2.0f);
+		
 		sumPoint += point;
 		currentInterval++;
 
 		// 주어진 interval을 넘은 경우에만 그려줌
 		if(interval == -1 || interval <= currentInterval) {
 			// 모아둔 점의 평균을 계산
-			Vector2 endPoint = sumPoint / interval;
+			Vector2 endPoint = sumPoint;
+			if(interval != -1)
+				 endPoint /= interval;
 
 			// 선 위치 결정
 			if(hasPreviousPoint == true) {

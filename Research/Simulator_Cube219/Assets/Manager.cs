@@ -7,7 +7,7 @@ public class Manager : MonoBehaviour {
 	public Player player;
 	public Machine machine;
 
-	public RateGraph rateGraphPanel;
+	public Graph rateGraphPanel;
 
 	private int startMoney;
 	private int endMoney;
@@ -22,12 +22,12 @@ public class Manager : MonoBehaviour {
 	{
 		player.money = 30000;
 		// 그래프 초기화
-		rateGraphPanel.Init(10000, 10, 80.0f, 110.0f);
+		rateGraphPanel.Init(80.0f, 110.0f, 0, 1000);
 
 		startMoney = player.money;
-		for(int i=0; i<10000; i++) {
+		for(int i=0; i<1000; i++) {
 			machine.Run(player);
-			rateGraphPanel.DrawGraph((float)player.money / (float)startMoney * 100.0f, i+1);
+			rateGraphPanel.DrawGraph(i+1, (float)(player.money) / (float)startMoney * 100.0f);
 		}
 		endMoney = player.money;
 		Debug.Log("Current Money: " + endMoney);
