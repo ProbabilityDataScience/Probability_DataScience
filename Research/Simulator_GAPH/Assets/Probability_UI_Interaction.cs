@@ -170,6 +170,8 @@ public class Probability_UI_Interaction : MonoBehaviour
 		}
 
 		int[] earnMoney = { 0, 0, 0 };
+		int[] earnMoney2 = { 0, 0, 0 };
+		int[] earnMoney3 = {0,0};
 
 		Debug.Log("Circle : " + circle);
 		for (int i = 0; i < 3; i++)
@@ -207,7 +209,100 @@ public class Probability_UI_Interaction : MonoBehaviour
 			}
 		}
 
-		Debug.Log("(" + circle + ")" + ". " + "Line 1 EarnMoney : " + earnMoney[0] + " Line 2 EarnMoney : " + earnMoney[1] + " Line 3 EarnMoney : " + earnMoney[2]);
+		for (int i = 0; i < 3; i++) 
+		{
+			if (dataDisplay [0, i] == dataDisplay [1, i] && dataDisplay [0, i] == dataDisplay [2, i] && dataDisplay [1, i] == dataDisplay [2, i]) 
+			{
+				if (dataDisplay [0, i] == 1)
+				{
+					money += 1;
+					earnMoney2[i] = 1;
+				}
+				else if (dataDisplay [0, i] == 2)
+				{
+					money += 5;
+					earnMoney2[i] = 5;
+				}
+				else if (dataDisplay [0, i] == 3)
+				{
+					money += 20;
+					earnMoney2[i] = 20;
+				}
+				else if (dataDisplay [0, i] == 4)
+				{
+					money += 40;
+					earnMoney2[i] = 40;
+				}
+				else if (dataDisplay [0, i] == 5)
+				{
+					money += 200;
+					earnMoney2[i] = 200;
+				}
+			}
+		}
+
+		if (dataDisplay [0, 0] == dataDisplay [1, 1] && dataDisplay [0, 0] == dataDisplay [2, 2] && dataDisplay [1, 1] == dataDisplay [2, 2]) 
+		{
+			if (dataDisplay [0, 0] == 1)
+			{
+				money += 1;
+				earnMoney3[0] = 1;
+			}
+			else if (dataDisplay [0, 0] == 2)
+			{
+				money += 5;
+				earnMoney3[0] = 5;
+			}
+			else if (dataDisplay [0, 0] == 3)
+			{
+				money += 20;
+				earnMoney3[0] = 20;
+			}
+			else if (dataDisplay [0, 0] == 4)
+			{
+				money += 40;
+				earnMoney3[0] = 40;
+			}
+			else if (dataDisplay [0, 0] == 5)
+			{
+				money += 200;
+				earnMoney3[0] = 200;
+			}
+		}
+
+		if (dataDisplay [0, 2] == dataDisplay [1, 1] && dataDisplay [0, 2] == dataDisplay [2, 0] && dataDisplay [0, 2] == dataDisplay [2, 0]) 
+		{
+			if (dataDisplay [0, 0] == 1)
+			{
+				money += 1;
+				earnMoney3[1] = 1;
+			}
+			else if (dataDisplay [0, 0] == 2)
+			{
+				money += 5;
+				earnMoney3[1] = 5;
+			}
+			else if (dataDisplay [0, 0] == 3)
+			{
+				money += 20;
+				earnMoney3[1] = 20;
+			}
+			else if (dataDisplay [0, 0] == 4)
+			{
+				money += 40;
+				earnMoney3[1] = 40;
+			}
+			else if (dataDisplay [0, 0] == 5)
+			{
+				money += 200;
+				earnMoney3[1] = 200;
+			}
+		}
+
+		Debug.Log("(" + circle + ")" +"("+"Vertical"+")"+ ". " + "Line 1 EarnMoney : " + earnMoney[0] + " Line 2 EarnMoney : " + earnMoney[1] + " Line 3 EarnMoney : " + earnMoney[2]);
+		Debug.Log("(" + circle + ")" +"("+"Horizental"+")"+ ". " + "Line 1 EarnMoney : " + earnMoney2[0] + " Line 2 EarnMoney : " + earnMoney2[1] + " Line 3 EarnMoney : " + earnMoney2[2]);
+		Debug.Log("(" + circle + ")" +"("+"Diagonal_1"+")"+ ". " + "Line 1 EarnMoney : " + earnMoney3[0]);
+		Debug.Log("(" + circle + ")" +"("+"Diagonal_2"+")"+ ". " + "Line 1 EarnMoney : " + earnMoney3[1]);
 		Debug.Log("(" + circle + ")" + ". " + money);
 
 		if (RepeatCount % 1 == 0)
