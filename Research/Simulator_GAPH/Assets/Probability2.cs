@@ -55,6 +55,14 @@ public class Probability2 : MonoBehaviour
     */
 	int[] dataSet3_2 = { 1, 3, 4, 2, 1, 3, 5, 3, 2, 1, 3, 4, 3, 4, 2, 3, 4, 1, 2, 4, 5, 2, 4, 3, 1, 3, 4, 1, 2, 3, 5, 4, 2, 1, 2, 3, 3, 5, 1, 2 }; //dataset change 1
 
+	/* dataSet-3_3 ( middle return-4 )
+    *   1              2           3          4             5      
+    *   1              5          20         40            200
+    *  0.3 ,          0.1,       0.3,        0.2,          0.1     Dataset Probability 
+    * 0.027 ,        0.001 ,    0.027 ,     0.008 ,       0.001    Dataset Probability 3X
+    * 81,000         15,000    1,620,000 ,  960,000      600,000   Dataset money output
+    */
+	int[] dataSet3_3 = { 2,1,4,1,3,4,3,5,2,1,4,1  ,1,2,1,3,4,3,5,3,1,2,1  ,1,2,1,3,4,3,5,3,4,2,1  ,1,2,1,3,1,3,5,3,1,2,1,3,4 }; //dataset change 1
 
 	/* dataSet-4 ( low return )
     *   1              2           3          4             5      
@@ -65,15 +73,32 @@ public class Probability2 : MonoBehaviour
     */
 	int[] dataSet4 = { 2,1,2,1,3,4,3,5,3,1,2,1  ,1,2,1,3,4,3,5,3,1,2,1  ,1,2,1,3,4,3,5,3,1,2,1  ,1,2,1,3,4,3,5,3,1,2,1,3,2 }; //dataset change 1
 
+	/* dataSet-4_1 ( low return-2 )
+    *   1              2           3          4             5      
+    *   1              5          20         40            200
+    *  0.3 ,          0.2,       0.2,        0.2,          0.1     Dataset Probability 
+    * 0.027 ,        0.008 ,    0.008 ,     0.008 ,       0.001    Dataset Probability 3X
+    * 81,000        120,000     480,000    960,000 ,     600,000   Dataset money output
+    */
+	int[] dataSet4_1 = { 2,1,4,1,3,4,3,5,2,1,4,1  ,1,2,1,3,4,3,5,3,1,2,1  ,1,2,1,3,4,3,5,3,4,2,1  ,1,2,1,3,1,3,5,3,1,2,1,3,4 }; //dataset change 1
+
 	/* dataSet-5 ( very low return )
     *   1              2           3          4             5      
     *   1              5          20         40            200
     *  0.4 ,          0.25,      0.20,       0.1,          0.05     Dataset Probability 
-    * 0.027 ,      0.015625 ,    0.008 ,    0.001 ,       0.000125    Dataset Probability 3X
+    * 0.064 ,      0.015625 ,    0.008 ,    0.001 ,       0.000125    Dataset Probability 3X
     * 192,000        234,375    480,000    120,000 ,      75,000   Dataset money output
     */
 	int[] dataSet5 = { 1,2,1,3,4,3,2,1,2,1 ,5, 1, 2, 1, 2, 3, 4, 3, 2, 1, 2, 1  , 1, 2, 1, 2, 3, 4, 3, 2, 1, 2, 1 ,5, 1, 2, 1, 2, 3, 4, 3, 1, 2, 1 }; //dataset change 1
 
+	/* dataSet-5_1 ( very low return-2 )
+    *   1              2           3           4             5      
+    *   1              5          20          40            200
+    *  0.4 ,          0.2,      0.25,        0.1,          0.05     Dataset Probability 
+    * 0.064 ,        0.008 ,   0.015625 ,    0.001 ,       0.000125    Dataset Probability 3X
+    * 192,000       120,000    937,500      120,000 ,      75,000   Dataset money output
+    */
+	int[] dataSet5_1 = { 1,2,1,3,4,3,2,1,2,1 ,5, 1, 3, 1, 2, 3, 4, 3, 2, 1, 2, 1  , 1, 2, 1, 2, 3, 4, 3, 2, 1, 2, 1 ,5, 1, 3, 1, 2, 3, 4, 3, 1, 2, 1 }; //dataset change 1
 
 	int circle;
 	int money;
@@ -100,44 +125,44 @@ public class Probability2 : MonoBehaviour
 				dataDisplay[i, j] = 0;
 
 		/*
-         * DataSet1 DataSet2 DataSet3
-         * DataSet2 DataSet4 DataSet3
-         * DataSet2 DataSet3 DataSet5
+         * DataSet5  DataSet5     DataSet4_1
+         * DataSet4  dataSet5_1   dataSet4_1
+         * DataSet5  dataSet4_1   DataSet5
          */
 
 		int randomOfDataSet;
 
 		//[0,0]
-		randomOfDataSet = Random.Range(0, dataSet.Length);
-		dataDisplay[0, 0] = dataSet[randomOfDataSet];
+		randomOfDataSet = Random.Range(0, dataSet5.Length);
+		dataDisplay[0, 0] = dataSet5[randomOfDataSet];
 
 		//[0,1]
-		randomOfDataSet = Random.Range(0, dataSet2.Length);
-		dataDisplay[0, 1] = dataSet2[randomOfDataSet];
+		randomOfDataSet = Random.Range(0, dataSet5.Length);
+		dataDisplay[0, 1] = dataSet5[randomOfDataSet];
 
 		//[0,2]
-		randomOfDataSet = Random.Range(0, dataSet3.Length);
-		dataDisplay[0, 2] = dataSet3[randomOfDataSet];
+		randomOfDataSet = Random.Range(0, dataSet4_1.Length);
+		dataDisplay[0, 2] = dataSet4_1[randomOfDataSet];
 
 		//[1,0]
-		randomOfDataSet = Random.Range(0, dataSet2.Length);
-		dataDisplay[1, 0] = dataSet2[randomOfDataSet];
+		randomOfDataSet = Random.Range(0, dataSet4.Length);
+		dataDisplay[1, 0] = dataSet4[randomOfDataSet];
 
 		//[1,1]
-		randomOfDataSet = Random.Range(0, dataSet4.Length);
-		dataDisplay[1, 1] = dataSet4[randomOfDataSet];
+		randomOfDataSet = Random.Range(0, dataSet5_1.Length);
+		dataDisplay[1, 1] = dataSet5_1[randomOfDataSet];
 
 		//[1,2]
-		randomOfDataSet = Random.Range(0, dataSet3.Length);
-		dataDisplay[1, 2] = dataSet3[randomOfDataSet];
+		randomOfDataSet = Random.Range(0, dataSet4_1.Length);
+		dataDisplay[1, 2] = dataSet4_1[randomOfDataSet];
 
 		//[2,0]
-		randomOfDataSet = Random.Range(0, dataSet2.Length);
-		dataDisplay[2, 0] = dataSet2[randomOfDataSet];
+		randomOfDataSet = Random.Range(0, dataSet5.Length);
+		dataDisplay[2, 0] = dataSet5[randomOfDataSet];
 
 		//[2,1]
-		randomOfDataSet = Random.Range(0, dataSet3.Length);
-		dataDisplay[2, 1] = dataSet3[randomOfDataSet];
+		randomOfDataSet = Random.Range(0, dataSet4_1.Length);
+		dataDisplay[2, 1] = dataSet4_1[randomOfDataSet];
 
 		//[2,2]
 		randomOfDataSet = Random.Range(0, dataSet5.Length);
