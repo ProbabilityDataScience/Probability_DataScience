@@ -3,13 +3,11 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	// Use this for initialization
+	Board m_Board = new Board();
+
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+		m_Board.Square_Init ();
+		m_Board.Square_Get_Data ();
+		m_Board.Check_All_Data ();
 	}
 }
