@@ -13,16 +13,22 @@ public class Board {
 	//라인 비교
 	void Check_Data(Square[] Squares)
 	{
+		bool all_Line_Same = true;
+
 		for (int i = 1; i < 5; i++) 
 		{
 			if (Squares[i].Get_Square_Data() != 7) 
 			{
-				if (Squares [i - 1].Get_Square_Data() != Squares [i].Get_Square_Data())
+				if (Squares [i - 1].Get_Square_Data () != Squares [i].Get_Square_Data ()) 
+				{
+					all_Line_Same = false;
 					break;
+				}
 			}
 		}
 
-		Checked_Line [Checked_Line_Count] = true;
+		if (all_Line_Same)
+			Checked_Line [Checked_Line_Count] = true;
 		Checked_Line_Count++;
 	}
 
@@ -63,6 +69,20 @@ public class Board {
 		Check_Data (Squares);
 
 		Print_Check_Line ();
+	}
+
+	//각 상자 보석 번호 출력
+	public void Print_Square_Number()
+	{
+		for(int i =  0 ; i < 5 ; i++)
+		{
+			Debug.Log ("Line " + i + " : " 
+				+ m_Squares[0,i].Get_Square_Data() + " : " 
+				+ m_Squares[1,i].Get_Square_Data() + " : "
+				+ m_Squares[2,i].Get_Square_Data() + " : " 
+				+ m_Squares[3,i].Get_Square_Data() + " : " 
+				+ m_Squares[4,i].Get_Square_Data());
+		}
 	}
 
 	//결과 콘솔 출력

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		m_Board.Square_Init ();
 		m_Board.Square_Get_Data ();
+		m_Board.Print_Square_Number ();
 		m_Board.Check_All_Data ();
 	}
 }
