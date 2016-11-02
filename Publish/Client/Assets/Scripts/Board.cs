@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Board {
+public class Board:MonoBehaviour {
 
 	//보드안 보석이 표시되는 상자
-	Square[,] m_Squares = new Square[5,5];
+	public Square[,] m_Squares;// = new Square[5,5];
 	//라인 비교 확인 카운트 변수
 	int Checked_Line_Count;
 	//확인된 라인

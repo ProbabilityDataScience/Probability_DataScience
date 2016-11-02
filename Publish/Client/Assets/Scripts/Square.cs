@@ -1,4 +1,12 @@
-﻿public class Square {
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+public class Square :MonoBehaviour {
+
+	public Sprite[] jems;
+	public Sprite specialJem;
+	public RectTransform symbolList;
+	public Image[] symbols;
 
 	//이 상자의 보석 번호
 	private int square_Data;
