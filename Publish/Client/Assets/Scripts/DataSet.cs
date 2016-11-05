@@ -8,6 +8,8 @@ public static class DataSet
 
 	public static int[] gem_DataSet_1 = {160,20,20,20,20,20,1};
 
+	public static int free_Chance_Count;
+
 	//인풋된 데이터셋에서 데이터가져오기
 	public static int DataSet_Search(int[] input_DataSet)
 	{
@@ -63,11 +65,21 @@ public static class DataSet
 			return false;
 	}
 
-	public static int DataSet_Get(int a)
+	public static int DataSet_Get(int a, ref int b)
 	{
 		int m_GemNumber = 0;
-		if(a == 1)
-			m_GemNumber = DataSet_Search (gem_DataSet_1);
+		if (b <= 0) {
+			if (a == 1) 
+			{
+				m_GemNumber = DataSet_Search (gem_DataSet_1);
+				if (m_GemNumber == 7) 
+				{
+					free_Chance_Count = 5;
+					b = 5;
+				}
+			}
+		} else
+			m_GemNumber = 7;
 		
 		return m_GemNumber;
 	}
