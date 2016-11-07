@@ -26,11 +26,13 @@ public class CustomNumber : MonoBehaviour {
 		numHeight = numSprite[0].textureRect.height;
 		commaWidth = 5;
 		commaHeight = comma.textureRect.height;
+
+		changeText(number);
 	}
 
 	void Update()
 	{
-		changeText(number);
+		//changeText(number);
 	}
 
 	// 텍스트 변경

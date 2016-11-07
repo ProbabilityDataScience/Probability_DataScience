@@ -14,6 +14,52 @@ public class Board : MonoBehaviour {
 	//확인된 라인
 	bool[] checked_Line = new bool[12];
 
+	// 시작
+	public void Run()
+	{
+		for(int i=0; i<5; i++) {
+			Square_Line_1[i].RunSymbol();
+			Square_Line_2[i].RunSymbol();
+			Square_Line_3[i].RunSymbol();
+			Square_Line_4[i].RunSymbol();
+			Square_Line_5[i].RunSymbol();
+		}
+	}
+	
+	// 종료
+	public void Stop()
+	{
+		StartCoroutine(StopAni());
+	}
+	private IEnumerator StopAni()
+	{
+		// 라인1
+		for(int i = 0; i < 5; i++) {
+			Square_Line_1[i].StopSymbol(0);
+			yield return new WaitForSeconds(0.06f);
+		}
+		// 라인2
+		for(int i = 4; i >= 0; i--) {
+			Square_Line_2[i].StopSymbol(0);
+			yield return new WaitForSeconds(0.06f);
+		}
+		// 라인3
+		for(int i = 0; i < 5; i++) {
+			Square_Line_3[i].StopSymbol(0);
+			yield return new WaitForSeconds(0.06f);
+		}
+		// 라인4
+		for(int i = 4; i >= 0; i--) {
+			Square_Line_4[i].StopSymbol(0);
+			yield return new WaitForSeconds(0.06f);
+		}
+		// 라인5
+		for(int i = 0; i < 5; i++) {
+			Square_Line_5[i].StopSymbol(0);
+			yield return new WaitForSeconds(0.06f);
+		}
+	}
+
 	//라인 비교
 	void Check_Data(Square[] Squares)
 	{
