@@ -8,13 +8,17 @@ public static class DataSet
 
 	public static int[] gem_DataSet_1 = {160,20,20,20,20,20,1};
 
+	public static int free_Chance_Count;
+
 	//인풋된 데이터셋에서 데이터가져오기
 	public static int DataSet_Search(int[] input_DataSet)
 	{
 		//랜덤변수
 		int RandomCount = 0;
+
 		//보석숫자
 		int GemNumber = 0;
+
 		//데이터셋 총 보석 개수
 		int MaxCount = 0;
 
@@ -61,10 +65,22 @@ public static class DataSet
 			return false;
 	}
 
-	public static int DataSet_Get()
+	public static int DataSet_Get(int a, ref int b)
 	{
-		int m_GemNumber;
-		m_GemNumber = DataSet_Search (gem_DataSet_1);
+		int m_GemNumber = 0;
+		if (b <= 0) {
+			if (a == 1) 
+			{
+				m_GemNumber = DataSet_Search (gem_DataSet_1);
+				if (m_GemNumber == 7) 
+				{
+					free_Chance_Count = 5;
+					b = 5;
+				}
+			}
+		} else
+			m_GemNumber = 7;
+		
 		return m_GemNumber;
 	}
 }

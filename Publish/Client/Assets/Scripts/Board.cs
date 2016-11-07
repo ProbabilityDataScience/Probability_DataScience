@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Board:MonoBehaviour {
+public class Board : MonoBehaviour {
 
 	//보드안 보석이 표시되는 상자
-	public Square[,] m_Squares;// = new Square[5,5];
+	public Square[] Square_Line_1 = new Square[5];
+	public Square[] Square_Line_2 = new Square[5];
+	public Square[] Square_Line_3 = new Square[5];
+	public Square[] Square_Line_4 = new Square[5];
+	public Square[] Square_Line_5 = new Square[5];
 	//라인 비교 확인 카운트 변수
-	int Checked_Line_Count;
+	int checked_Line_Count;
 	//확인된 라인
-	bool[] Checked_Line = new bool[12];
+	bool[] checked_Line = new bool[12];
 
 	//라인 비교
 	void Check_Data(Square[] Squares)
@@ -28,84 +32,140 @@ public class Board:MonoBehaviour {
 		}
 
 		if (all_Line_Same)
-			Checked_Line [Checked_Line_Count] = true;
-		Checked_Line_Count++;
+			checked_Line [checked_Line_Count] = true;
+		checked_Line_Count++;
+	}
+
+	public void Vertical_Line_Check()
+	{
+		Square[] Squares = new Square[5];
+
+		for (int i = 0; i < 5; i++)
+			Squares [i] = Square_Line_1 [i];
+		Check_Data (Squares);
+
+		for (int i = 0; i < 5; i++)
+			Squares [i] = Square_Line_2 [i];
+		Check_Data (Squares);
+
+		for (int i = 0; i < 5; i++)
+			Squares [i] = Square_Line_3 [i];
+		Check_Data (Squares);
+
+		for (int i = 0; i < 5; i++)
+			Squares [i] = Square_Line_4 [i];
+		Check_Data (Squares);
+
+		for (int i = 0; i < 5; i++)
+			Squares [i] = Square_Line_5 [i];
+		Check_Data (Squares);
+	}
+
+	Square[] Return_Horizental_Line(int lineNumber)
+	{
+		Square[] Squares = new Square[5];
+		Squares [0] = Square_Line_1 [lineNumber];
+		Squares [1] = Square_Line_2 [lineNumber];
+		Squares [2] = Square_Line_3 [lineNumber];
+		Squares [3] = Square_Line_4 [lineNumber];
+		Squares [4] = Square_Line_5 [lineNumber];
+
+		return Squares;
+	}
+
+	public void Diagonal_Line_Check(Square A, Square B, Square C, Square D, Square E)
+	{
+		Square[] Squares = new Square[5];
+		Squares [0] = A;
+		Squares [1] = B;
+		Squares [2] = C;
+		Squares [3] = D;
+		Squares [4] = E;
+		Check_Data (Squares);
+			
+	}
+
+	public void Horizental_Line_Check()
+	{
+		Square[] Squares;
+
+		int horizental_Line = 0;
+
+		for (int i = 0; i < 5; i++) 
+		{
+			Squares = Return_Horizental_Line (horizental_Line);
+			Check_Data (Squares);
+			horizental_Line++;
+		}
 	}
 
 	//모든 라인 데이터 비교
 	public void Check_All_Data()
 	{
-		Checked_Line_Count = 0;
+		checked_Line_Count = 0;
 		Square[] Squares = new Square[5];
 
-		//Vertical Line Check
-		for (int i = 0; i < 5; i++) 
-		{
-			for (int j = 0; j < 5; j++)
-				Squares [j] = m_Squares [i, j];
-			Check_Data(Squares);
-		}
+		Vertical_Line_Check ();
 
 		//Horizental Line Check
-		for (int i = 0; i < 5; i++) 
-		{
-			for (int j = 0; j < 5; j++)
-				Squares [j] = m_Squares [j, i];
-			Check_Data (Squares);
-		}
+		Horizental_Line_Check();
 
 		//Diagonal Line 1 Check
-		for (int i = 0; i < 5; i++)
-			Squares [i] = m_Squares [i, i];
-		Check_Data (Squares);
+		Diagonal_Line_Check(Square_Line_1[0],Square_Line_2[1],Square_Line_3[2],Square_Line_4[3],Square_Line_5[4]);
 
 		//Diagonal Line 2 Check
-		int circle_Count = 4;
-		for(int i = 0 ; i < 5 ;i++)
-		{
-			Squares [i] = m_Squares [i, circle_Count];
-			circle_Count--;
-		}
-		Check_Data (Squares);
+		Diagonal_Line_Check(Square_Line_1[4],Square_Line_2[3],Square_Line_3[2],Square_Line_4[1],Square_Line_5[0]);
 
 		Print_Check_Line ();
 	}
 
+
 	//각 상자 보석 번호 출력
 	public void Print_Square_Number()
 	{
-		for(int i =  0 ; i < 5 ; i++)
-		{
-			Debug.Log ("Line " + i + " : " 
-				+ m_Squares[0,i].Get_Square_Data() + " : " 
-				+ m_Squares[1,i].Get_Square_Data() + " : "
-				+ m_Squares[2,i].Get_Square_Data() + " : " 
-				+ m_Squares[3,i].Get_Square_Data() + " : " 
-				+ m_Squares[4,i].Get_Square_Data());
-		}
+		Debug.Log ("Line 1 - " + Square_Line_1 [0].Get_Square_Data () + " : " + Square_Line_1 [1].Get_Square_Data () + " : " + Square_Line_1 [2].Get_Square_Data () + " : " +
+			Square_Line_1 [3].Get_Square_Data () + " : " + Square_Line_1 [4].Get_Square_Data ());
+		Debug.Log ("Line 2 - " + Square_Line_2 [0].Get_Square_Data () + " : " + Square_Line_2 [1].Get_Square_Data () + " : " + Square_Line_2 [2].Get_Square_Data () + " : " +
+			Square_Line_2 [3].Get_Square_Data () + " : " + Square_Line_2 [4].Get_Square_Data ());
+		Debug.Log ("Line 3 - " + Square_Line_3 [0].Get_Square_Data () + " : " + Square_Line_3 [1].Get_Square_Data () + " : " + Square_Line_3 [2].Get_Square_Data () + " : " +
+			Square_Line_3 [3].Get_Square_Data () + " : " + Square_Line_3 [4].Get_Square_Data ());
+		Debug.Log ("Line 4 - " + Square_Line_4 [0].Get_Square_Data () + " : " + Square_Line_4 [1].Get_Square_Data () + " : " + Square_Line_4 [2].Get_Square_Data () + " : " +
+			Square_Line_4 [3].Get_Square_Data () + " : " + Square_Line_4 [4].Get_Square_Data ());
+		Debug.Log ("Line 5 - " + Square_Line_5 [0].Get_Square_Data () + " : " + Square_Line_5 [1].Get_Square_Data () + " : " + Square_Line_5 [2].Get_Square_Data () + " : " +
+			Square_Line_5 [3].Get_Square_Data () + " : " + Square_Line_5 [4].Get_Square_Data ());
 	}
+
 
 	//결과 콘솔 출력
 	public void Print_Check_Line()
 	{
-		for (int i = 0; i < Checked_Line.Length; i++)
-			Debug.Log (i+ " : " +Checked_Line [i]);
-	}
-
-	//상자 초기
-	public void Square_Init()
-	{
-		for(int i = 0 ; i < 5 ; i++)
-			for(int j = 0 ; j < 5 ; j++)
-				m_Squares [i, j] = new Square ();
+		Debug.Log ("Vertical Line - " + checked_Line [0] + " : " + checked_Line [1] + " : " + checked_Line [2] + " : " + checked_Line [3] + " : " + checked_Line [4]);
+		Debug.Log ("Horizental Line - " + checked_Line [5] + " : " + checked_Line [6] + " : " + checked_Line [7] + " : " + checked_Line [8] + " : " + checked_Line [9]);
+		Debug.Log ("Diagonal Line - " + checked_Line [10] + " : " + checked_Line [11]);
 	}
 
 	//상자 보석 숫자 가져오기
 	public void Square_Get_Data()
 	{
 		for (int i = 0; i < 5; i++) 
-			for (int j = 0; j < 5; j++) 
-				m_Squares [i, j].Get_Data ();
+		{
+			Square_Line_1 [i].Get_Data();
+			Square_Line_2 [i].Get_Data();
+			Square_Line_3 [i].Get_Data();
+			Square_Line_4 [i].Get_Data();
+			Square_Line_5 [i].Get_Data();
+		}
+	}
+
+	public int Calculate_Return_Multiple()
+	{
+		int multiple_Count = 0;
+
+		for (int i = 0; i < checked_Line.Length; i++)
+			if (checked_Line [i] == true)
+				multiple_Count++;
+		
+		return multiple_Count;
 	}
 
 }

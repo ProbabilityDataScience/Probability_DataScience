@@ -3,12 +3,26 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	Board m_Board = new Board();
+	public Board board;
+	public int total_Money;
+	public int bet_Money;
 
 	void Start () {
-		m_Board.Square_Init ();
-		m_Board.Square_Get_Data ();
-		m_Board.Print_Square_Number ();
-		m_Board.Check_All_Data ();
+		Bet_Button_Function ();
+	}
+
+	void Bet_Button_Function()
+	{
+		if (total_Money > bet_Money) 
+		{
+			if (DataSet.free_Chance_Count > 0)
+				DataSet.free_Chance_Count--;
+			else
+				total_Money -= bet_Money;
+			
+			board.Square_Get_Data ();
+			board.Print_Square_Number ();
+			board.Check_All_Data ();
+		}
 	}
 }
