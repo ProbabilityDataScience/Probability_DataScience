@@ -13,10 +13,15 @@ public class Board : MonoBehaviour {
 	int checked_Line_Count;
 	//확인된 라인
 	bool[] checked_Line = new bool[12];
+	int run_Count = 0;
 
 	// 시작
 	public void Run()
 	{
+		run_Count++;
+		Square_Get_Data ();
+		Print_Square_Number ();
+		Check_All_Data ();
 		for(int i=0; i<5; i++) {
 			Square_Line_1[i].RunSymbol();
 			Square_Line_2[i].RunSymbol();
@@ -24,8 +29,15 @@ public class Board : MonoBehaviour {
 			Square_Line_4[i].RunSymbol();
 			Square_Line_5[i].RunSymbol();
 		}
+		StartCoroutine(Wait_Stop(2));
 	}
-	
+
+	private IEnumerator Wait_Stop(float _time)
+	{
+		yield return new WaitForSeconds (_time);
+		Stop();
+	}
+
 	// 종료
 	public void Stop()
 	{
@@ -35,27 +47,27 @@ public class Board : MonoBehaviour {
 	{
 		// 라인1
 		for(int i = 0; i < 5; i++) {
-			Square_Line_1[i].StopSymbol(0);
+			Square_Line_1[i].StopSymbol(Square_Line_1[i].Get_Square_Data());
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인2
 		for(int i = 4; i >= 0; i--) {
-			Square_Line_2[i].StopSymbol(0);
+			Square_Line_2[i].StopSymbol(Square_Line_2[i].Get_Square_Data());
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인3
 		for(int i = 0; i < 5; i++) {
-			Square_Line_3[i].StopSymbol(0);
+			Square_Line_3[i].StopSymbol(Square_Line_3[i].Get_Square_Data());
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인4
 		for(int i = 4; i >= 0; i--) {
-			Square_Line_4[i].StopSymbol(0);
+			Square_Line_4[i].StopSymbol(Square_Line_4[i].Get_Square_Data());
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인5
 		for(int i = 0; i < 5; i++) {
-			Square_Line_5[i].StopSymbol(0);
+			Square_Line_5[i].StopSymbol(Square_Line_5[i].Get_Square_Data());
 			yield return new WaitForSeconds(0.06f);
 		}
 	}
@@ -148,6 +160,9 @@ public class Board : MonoBehaviour {
 	//모든 라인 데이터 비교
 	public void Check_All_Data()
 	{
+		for (int i = 0; i < checked_Line.Length; i++)
+			checked_Line [i] = false;
+		
 		checked_Line_Count = 0;
 		Square[] Squares = new Square[5];
 
@@ -169,15 +184,15 @@ public class Board : MonoBehaviour {
 	//각 상자 보석 번호 출력
 	public void Print_Square_Number()
 	{
-		Debug.Log ("Line 1 - " + Square_Line_1 [0].Get_Square_Data () + " : " + Square_Line_1 [1].Get_Square_Data () + " : " + Square_Line_1 [2].Get_Square_Data () + " : " +
+		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Line 1 - " + Square_Line_1 [0].Get_Square_Data () + " : " + Square_Line_1 [1].Get_Square_Data () + " : " + Square_Line_1 [2].Get_Square_Data () + " : " +
 			Square_Line_1 [3].Get_Square_Data () + " : " + Square_Line_1 [4].Get_Square_Data ());
-		Debug.Log ("Line 2 - " + Square_Line_2 [0].Get_Square_Data () + " : " + Square_Line_2 [1].Get_Square_Data () + " : " + Square_Line_2 [2].Get_Square_Data () + " : " +
+		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Line 2 - " + Square_Line_2 [0].Get_Square_Data () + " : " + Square_Line_2 [1].Get_Square_Data () + " : " + Square_Line_2 [2].Get_Square_Data () + " : " +
 			Square_Line_2 [3].Get_Square_Data () + " : " + Square_Line_2 [4].Get_Square_Data ());
-		Debug.Log ("Line 3 - " + Square_Line_3 [0].Get_Square_Data () + " : " + Square_Line_3 [1].Get_Square_Data () + " : " + Square_Line_3 [2].Get_Square_Data () + " : " +
+		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Line 3 - " + Square_Line_3 [0].Get_Square_Data () + " : " + Square_Line_3 [1].Get_Square_Data () + " : " + Square_Line_3 [2].Get_Square_Data () + " : " +
 			Square_Line_3 [3].Get_Square_Data () + " : " + Square_Line_3 [4].Get_Square_Data ());
-		Debug.Log ("Line 4 - " + Square_Line_4 [0].Get_Square_Data () + " : " + Square_Line_4 [1].Get_Square_Data () + " : " + Square_Line_4 [2].Get_Square_Data () + " : " +
+		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Line 4 - " + Square_Line_4 [0].Get_Square_Data () + " : " + Square_Line_4 [1].Get_Square_Data () + " : " + Square_Line_4 [2].Get_Square_Data () + " : " +
 			Square_Line_4 [3].Get_Square_Data () + " : " + Square_Line_4 [4].Get_Square_Data ());
-		Debug.Log ("Line 5 - " + Square_Line_5 [0].Get_Square_Data () + " : " + Square_Line_5 [1].Get_Square_Data () + " : " + Square_Line_5 [2].Get_Square_Data () + " : " +
+		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Line 5 - " + Square_Line_5 [0].Get_Square_Data () + " : " + Square_Line_5 [1].Get_Square_Data () + " : " + Square_Line_5 [2].Get_Square_Data () + " : " +
 			Square_Line_5 [3].Get_Square_Data () + " : " + Square_Line_5 [4].Get_Square_Data ());
 	}
 
@@ -185,9 +200,9 @@ public class Board : MonoBehaviour {
 	//결과 콘솔 출력
 	public void Print_Check_Line()
 	{
-		Debug.Log ("Vertical Line - " + checked_Line [0] + " : " + checked_Line [1] + " : " + checked_Line [2] + " : " + checked_Line [3] + " : " + checked_Line [4]);
-		Debug.Log ("Horizental Line - " + checked_Line [5] + " : " + checked_Line [6] + " : " + checked_Line [7] + " : " + checked_Line [8] + " : " + checked_Line [9]);
-		Debug.Log ("Diagonal Line - " + checked_Line [10] + " : " + checked_Line [11]);
+		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Vertical Line - " + checked_Line [0] + " : " + checked_Line [1] + " : " + checked_Line [2] + " : " + checked_Line [3] + " : " + checked_Line [4]);
+		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Horizental Line - " + checked_Line [5] + " : " + checked_Line [6] + " : " + checked_Line [7] + " : " + checked_Line [8] + " : " + checked_Line [9]);
+		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Diagonal Line - " + checked_Line [10] + " : " + checked_Line [11]);
 	}
 
 	//상자 보석 숫자 가져오기

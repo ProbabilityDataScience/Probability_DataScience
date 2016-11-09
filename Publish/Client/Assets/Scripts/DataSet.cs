@@ -42,7 +42,7 @@ public static class DataSet
 			//아닐경우 반복문 진행
 			if (Check_Data_Range (RandomCount, StartNumber, EndNumber)) 
 			{
-				GemNumber = i + 1;
+				GemNumber = i;
 				break;
 			}
 
