@@ -3,10 +3,58 @@ using System.Collections;
 
 public static class DataSet 
 {
-	//Basic DataSet
-	public static int[] dataSet = { 1,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,3,3, 4,4,4,4,4,4,4,4,4,4, 5,5,5,5,5,5,5,5,5,5, 6,6,6,6,6,6,6,6,6,6, 7 };
+	//-------------------------------------- Gem 1 Data Sets ------------------------------------------
+	/*-- () Data_Set 1 () --
+	 * 
+	 *    0.9		 0.018		 	 0.018	 		0.018			0.018			0.018			0.01		//Probability of each gems
+	 * 	 0.729	   5.832e-06	   5.832e-06	  5.832e-06	  	  5.832e-06		  5.832e-06		   1e-06		//3x Multiply				
+	 * 0.59049	 1.889568e-09	 1.889568e-09  1.889568e-09 	 1.889568e-09   1.889568e-09	   1e-10		//5x Multiply
+	 * 
+	 * Total : 18000 count Data set
+	 */
+	public static int[] gem_1_DataSet_1 = {16200,324,324,324,324,324,180};
 
-	public static int[] gem_DataSet_1 = {160,20,20,20,20,20,1};
+	/*-- () Data_Set 2 () --
+	 * 
+	 *    0.8		 0.038		 	 0.038	 		    0.038			0.038			0.038			0.01		//Probability of each gems
+	 * 	 0.512	   5.4872e-05	   5.4872e-05	    5.4872e-05	  	5.4872e-05	  	5.4872e-05	  	    1e-06		//3x Multiply				
+	 *  0.32768	  7.92352e-08  	  7.92352e-08  		7.92352e-08  	7.92352e-08  	7.92352e-08  	 	1e-10		//5x Multiply
+	 * 
+	 * Total : 152000 count Data set
+	 */
+	public static int[] gem_1_DataSet_2 = {121600,5776,5776,5776,5776,5776,1520};
+
+	/*-- () Data_Set 3 () --
+	 * 
+	 *    0.7		  0.058		 	  0.058	 		    0.058			0.058			 0.058			0.01		//Probability of each gems
+	 * 	 0.343	   1.95112e-04	   1.95112e-04		1.95112e-04	 	 1.95112e-04	  1.95112e-04	   1e-06		//3x Multiply				
+	 *  0.16807	   6.56357e-07     6.56357e-07  	6.56357e-07 	 6.56357e-07 	  6.56357e-07      1e-10		//5x Multiply
+	 * 
+	 * Total : 406000 count Data set
+	 */
+	public static int[] gem_1_DataSet_3 = {284200,23548,23548,23548,23548,23548,4060};
+
+	/*-- () Data_Set 4 () --
+	 * 
+	 *    0.6			0.078		 	0.078	 		0.078			0.078			0.078			0.01		//Probability of each gems
+	 * 	 0.216	    4.74552e-04	    4.74552e-04		4.74552e-04	 	 4.74552e-04	  4.74552e-04	   1e-06		//3x Multiply				
+	 *  0.07776	 	2.88717e-06  	2.88717e-06  	2.88717e-06 	 2.88717e-06 	  2.88717e-06      1e-10		//5x Multiply
+	 * 
+	 * Total : 234000 count Data set
+	 */
+	public static int[] gem_1_DataSet_4 = {140400,18252,18252,18252,18252,18252,2340};
+
+	/*-- () Data_Set 4 () --
+	 * 
+	 *    0.5			0.098		 	0.098	 		0.098			0.098			0.098			0.01		//Probability of each gems
+	 * 	 0.125	    9.41192e-04	    9.41192e-04		9.41192e-04	 	 9.41192e-04	  9.41192e-04	   1e-06		//3x Multiply				
+	 *  0.03125	 	9.03921e-06  	9.03921e-06  	9.03921e-06 	 9.03921e-06 	  9.03921e-066      1e-10		//5x Multiply
+	 * 
+	 * Total : 490000 count Data set
+	 */
+	public static int[] gem_1_DataSet_5 = {245000,48020,48020,48020,48020,48020,4900};
+
+	//-------------------------------------------------------------------------------------------------
 
 	public static int free_Chance_Count;
 
@@ -71,8 +119,8 @@ public static class DataSet
 		if (b <= 0) {
 			if (a == 1) 
 			{
-				m_GemNumber = DataSet_Search (gem_DataSet_1);
-				if (m_GemNumber == 7) 
+				m_GemNumber = DataSet_Search (gem_1_DataSet_1);
+				if (m_GemNumber == 6) 
 				{
 					free_Chance_Count = 5;
 					b = 5;

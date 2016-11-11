@@ -22,9 +22,9 @@ public class Square : MonoBehaviour {
 	{
 		// DOTween Sequence 초기화
 		twinSeq = DOTween.Sequence();
-		twinSeq.Append(symbolList.DOAnchorPosY(-120f, 0.15f).SetEase(Ease.Linear).OnComplete(EndFirstSymbol));
-		twinSeq.Append(symbolList.DOAnchorPosY(-240f, 0.15f).SetEase(Ease.Linear).OnComplete(EndSecondSymbol));
-		twinSeq.Append(symbolList.DOAnchorPosY(-360f, 0.15f).SetEase(Ease.Linear).OnComplete(EndThirdSymbol));
+		twinSeq.Append(symbolList.DOAnchorPosY(-120f, 0.05f).SetEase(Ease.Linear).OnComplete(EndFirstSymbol));
+		twinSeq.Append(symbolList.DOAnchorPosY(-240f, 0.05f).SetEase(Ease.Linear).OnComplete(EndSecondSymbol));
+		twinSeq.Append(symbolList.DOAnchorPosY(-360f, 0.05f).SetEase(Ease.Linear).OnComplete(EndThirdSymbol));
 		twinSeq.SetLoops(-1, LoopType.Restart);
 
 		ChangeSymbol(0, Random.Range(0, symbolSprites.Length));

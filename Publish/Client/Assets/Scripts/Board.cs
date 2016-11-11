@@ -79,7 +79,7 @@ public class Board : MonoBehaviour {
 
 		for (int i = 1; i < 5; i++) 
 		{
-			if (Squares[i].Get_Square_Data() != 7) 
+			if (Squares[i].Get_Square_Data() != 6) 
 			{
 				if (Squares [i - 1].Get_Square_Data () != Squares [i].Get_Square_Data ()) 
 				{
