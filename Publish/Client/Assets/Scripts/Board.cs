@@ -51,7 +51,7 @@ public class Board : MonoBehaviour {
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인2
-		for(int i = 4; i >= 0; i--) {
+		for(int i = 0; i < 5; i++) {
 			Square_Line_2[i].StopSymbol(Square_Line_2[i].Get_Square_Data());
 			yield return new WaitForSeconds(0.06f);
 		}
@@ -61,7 +61,7 @@ public class Board : MonoBehaviour {
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인4
-		for(int i = 4; i >= 0; i--) {
+		for(int i = 0; i < 5; i++) {
 			Square_Line_4[i].StopSymbol(Square_Line_4[i].Get_Square_Data());
 			yield return new WaitForSeconds(0.06f);
 		}
