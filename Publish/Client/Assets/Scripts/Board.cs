@@ -15,21 +15,27 @@ public class Board : MonoBehaviour {
 	bool[] checked_Line = new bool[12];
 	int run_Count = 0;
 
+	public bool isRun = false;
+
 	// 시작
 	public void Run()
 	{
-		run_Count++;
-		Square_Get_Data ();
-		Print_Square_Number ();
-		Check_All_Data ();
-		for(int i=0; i<5; i++) {
-			Square_Line_1[i].RunSymbol();
-			Square_Line_2[i].RunSymbol();
-			Square_Line_3[i].RunSymbol();
-			Square_Line_4[i].RunSymbol();
-			Square_Line_5[i].RunSymbol();
+		if(isRun == false) {
+			isRun = true;
+
+			run_Count++;
+			Square_Get_Data();
+			Print_Square_Number();
+			Check_All_Data();
+			for(int i = 0; i < 5; i++) {
+				Square_Line_1[i].RunSymbol();
+				Square_Line_2[i].RunSymbol();
+				Square_Line_3[i].RunSymbol();
+				Square_Line_4[i].RunSymbol();
+				Square_Line_5[i].RunSymbol();
+			}
+			StartCoroutine(Wait_Stop(2));
 		}
-		StartCoroutine(Wait_Stop(2));
 	}
 
 	private IEnumerator Wait_Stop(float _time)
@@ -70,6 +76,7 @@ public class Board : MonoBehaviour {
 			Square_Line_5[i].StopSymbol(Square_Line_5[i].Get_Square_Data());
 			yield return new WaitForSeconds(0.06f);
 		}
+		isRun = false;
 	}
 
 	//라인 비교

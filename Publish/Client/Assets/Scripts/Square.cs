@@ -28,8 +28,6 @@ public class Square : MonoBehaviour {
 		twinSeq.SetLoops(-1, LoopType.Restart);
 
 		ChangeSymbol(0, Random.Range(0, symbolSprites.Length));
-
-		//RunSymbol();
 	}
 
 	//데이터셋에서 번호 가져오기
