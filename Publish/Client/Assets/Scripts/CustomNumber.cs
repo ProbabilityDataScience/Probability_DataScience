@@ -7,6 +7,7 @@ public class CustomNumber : MonoBehaviour {
 
 	public Sprite[] numSprite;
 	public Sprite comma;
+	public float commaActualWidth;
 
 	public enum Alignment { Left, Center, Right };
 	public Alignment alignment = Alignment.Left;
@@ -24,7 +25,7 @@ public class CustomNumber : MonoBehaviour {
 	void Awake () {
 		numWidth = numSprite[0].textureRect.width;
 		numHeight = numSprite[0].textureRect.height;
-		commaWidth = 5;
+		commaWidth = comma.textureRect.width;
 		commaHeight = comma.textureRect.height;
 
 		changeText(number);
@@ -100,7 +101,7 @@ public class CustomNumber : MonoBehaviour {
 					t.AddComponent<CanvasRenderer>();
 					t.AddComponent<Image>();
 
-					t.GetComponent<RectTransform>().sizeDelta = new Vector2(20, commaHeight);
+					t.GetComponent<RectTransform>().sizeDelta = new Vector2(commaWidth, commaHeight);
 					t.GetComponent<Image>().sprite = comma;
 
 					Instantiate(t);
@@ -120,12 +121,12 @@ public class CustomNumber : MonoBehaviour {
 				for(int i = 0; i < numCount; i++) {
 					ChangeNumSprite(nums[i], piecesOfNum[i]);
 					// 숫자 : 자릿수(45) + 콤마가 쓰인 수(15)
-					nums[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(numWidth * i + commaWidth * commaIndex, 0);
+					nums[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(numWidth * i + commaActualWidth * commaIndex, 0);
 
 					// 콤마가 쓰여야 하는 자리수면 콤마 추가
 					if((numCount - i - 1) % 3 == 0 && numCount - i - 1 != 0) {
 						// 앞의 숫자에 +30
-						commas[commaIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(numWidth * i + commaWidth * commaIndex + 11, 0);
+						commas[commaIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(numWidth * i + commaActualWidth * commaIndex + 23, 0);
 						commaIndex++;
 					}
 				}
@@ -151,12 +152,12 @@ public class CustomNumber : MonoBehaviour {
 				for(int i = 0; i < numCount; i++) {
 					ChangeNumSprite(nums[i], piecesOfNum[numCount - i - 1]);
 					// 숫자 : 자릿수(45) + 콤마가 쓰인 수(15)
-					nums[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(-numWidth * i - commaWidth * commaIndex, 0);
+					nums[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(-numWidth * i - commaActualWidth * commaIndex, 0);
 
 					// 콤마가 쓰여야 하는 자리수면 콤마 추가
 					if((i + 1) % 3 == 0 && i != numCount - 1) {
 						// 뒤의 숫자에 -30
-						commas[commaIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-numWidth * i - commaWidth * commaIndex - 13, 0);
+						commas[commaIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(-numWidth * i - commaActualWidth * commaIndex - 13, 0);
 						commaIndex++;
 					}
 				}
