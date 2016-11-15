@@ -35,10 +35,23 @@ public class Square : MonoBehaviour {
 	//데이터셋에서 번호 가져오기
 	public void Get_Data()
 	{
-		if (free_Count <= 0) 
-			square_Data = DataSet.DataSet_Get (1,ref free_Count);
+		if (free_Count <= 0) {
+			
+			square_Data = DataSet.DataSet_Get (2, ref free_Count);
+			if (square_Data == 0)
+				square_Data = DataSet.selected_Gem;
+			else 
+				Random_Get_Data ();
+		}
 		else
 			free_Count--;
+	}
+
+	public void Random_Get_Data()
+	{
+		square_Data = Random.Range(0, 6);
+		if (square_Data == DataSet.selected_Gem)
+			Random_Get_Data ();
 	}
 
 	//보석 번호 반환 해주기
@@ -46,7 +59,6 @@ public class Square : MonoBehaviour {
 	{
 		return square_Data;
 	}
-
 
 	private void ChangeSymbol(int index, int symbolNum)
 	{

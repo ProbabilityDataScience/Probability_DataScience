@@ -22,6 +22,8 @@ public class Board : MonoBehaviour {
 		Square_Get_Data ();
 		Print_Square_Number ();
 		Check_All_Data ();
+		Get_Selected_Gem_Number();
+
 		for(int i=0; i<5; i++) {
 			Square_Line_1[i].RunSymbol();
 			Square_Line_2[i].RunSymbol();
@@ -36,6 +38,12 @@ public class Board : MonoBehaviour {
 	{
 		yield return new WaitForSeconds (_time);
 		Stop();
+	}
+
+	public void Get_Selected_Gem_Number()
+	{
+		DataSet.selected_Gem = DataSet.SelectSet_Get(1);
+
 	}
 
 	// 종료
