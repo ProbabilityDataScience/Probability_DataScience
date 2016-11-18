@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
 using DG.Tweening;
@@ -7,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class InitManager : MonoBehaviour {
 
+	public Image TitleImage;
 	public Image UIPanel;
 
 	private enum State { NotLogin, Loginning, Logined };
@@ -55,6 +57,12 @@ public class InitManager : MonoBehaviour {
 			Debug.Log("Successful login with facebook");
 			Debug.Log("TokenID : " + AccessToken.CurrentAccessToken.UserId);
 
+			// 토근 값 넣어줌
+			this.GetComponent<NetworkSession>().datas.Add(AccessToken.CurrentAccessToken.UserId);
+			this.GetComponent<NetworkSession>().type = RequestType.POST;
+			this.GetComponent<NetworkSession>().protocol = RequestProtocol.LoginWithFacebook;
+			this.GetComponent<NetworkSession>().Request();
+
 			Login_Complete();
 		} else {
 			state = State.NotLogin;
@@ -84,6 +92,10 @@ public class InitManager : MonoBehaviour {
 	{
 		Debug.Log("MoveNextScene");
 		SceneManager.LoadScene("MainScene");
+	}
+	private IEnumerator MoveNextScene_ani()
+	{
+		yield return new WaitForSeconds(2f);
 	}
 
 	// Guest버튼 누름
