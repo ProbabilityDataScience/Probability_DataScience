@@ -85,4 +85,13 @@ public class InitManager : MonoBehaviour {
 		Debug.Log("MoveNextScene");
 		SceneManager.LoadScene("MainScene");
 	}
+
+	// Guest버튼 누름
+	public void ClickGuestBtn()
+	{
+		DataManager.accountType = "Guest";
+		Debug.Log("Successful login with guest");
+
+		Login_Complete();
+	}
 }
