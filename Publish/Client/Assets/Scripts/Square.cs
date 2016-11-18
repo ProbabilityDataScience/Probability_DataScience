@@ -15,11 +15,13 @@ public class Square : MonoBehaviour {
 
 	private Sequence twinSeq;
 	private bool isEnd = true;
-	private int endNum=0;
-	private int currentSymbolIndex = 0;
+	private int endNum;
+	private int currentSymbolIndex;
 
 	void Start()
 	{
+		endNum = 0;
+		currentSymbolIndex = 0;
 		// DOTween Sequence 초기화
 		twinSeq = DOTween.Sequence();
 		twinSeq.Append(symbolList.DOAnchorPosY(-120f, 0.05f).SetEase(Ease.Linear).OnComplete(EndFirstSymbol));
@@ -35,7 +37,7 @@ public class Square : MonoBehaviour {
 	{
 		if (free_Count <= 0) {
 			
-			square_Data = DataSet.DataSet_Get (2, ref free_Count);
+			square_Data = DataSet.DataSet_Get (4, ref free_Count);
 			if (square_Data == 0)
 				square_Data = DataSet.selected_Gem;
 			else 

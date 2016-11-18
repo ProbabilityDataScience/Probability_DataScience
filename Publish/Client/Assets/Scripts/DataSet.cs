@@ -34,8 +34,8 @@ public static class DataSet
 	/*-- () Data_Set 2 () --
 	 * 
 	 *    0.8		 0.038		 	 0.038	 		    0.038			0.038			0.038			0.01		//Probability of each gems
-	 * 	 0.512	   5.4872e-05	   5.4872e-05	    5.4872e-05	  	5.4872e-05	  	5.4872e-05	  	    1e-06		//3x Multiply				
-	 *  0.32768	  7.92352e-08  	  7.92352e-08  		7.92352e-08  	7.92352e-08  	7.92352e-08  	 	1e-10		//5x Multiply
+	 * 	 0.512	   5.4872e-05	   5.4872e-05	    5.4872e-05	  	5.4872e-05	  	5.4872e-05	  	   1e-06		//3x Multiply				
+	 *  0.32768	  7.92352e-08  	  7.92352e-08  		7.92352e-08  	7.92352e-08  	7.92352e-08  	   1e-10		//5x Multiply
 	 * 
 	 * Total : 152000 count Data set
 	 */
@@ -65,7 +65,7 @@ public static class DataSet
 	 * 
 	 *    0.5			0.098		 	0.098	 		0.098			0.098			0.098			0.01		//Probability of each gems
 	 * 	 0.125	    9.41192e-04	    9.41192e-04		9.41192e-04	 	 9.41192e-04	  9.41192e-04	   1e-06		//3x Multiply				
-	 *  0.03125	 	9.03921e-06  	9.03921e-06  	9.03921e-06 	 9.03921e-06 	  9.03921e-066      1e-10		//5x Multiply
+	 *  0.03125	 	9.03921e-06  	9.03921e-06  	9.03921e-06 	 9.03921e-06 	  9.03921e-066     1e-10		//5x Multiply
 	 * 
 	 * Total : 490000 count Data set
 	 */
@@ -131,6 +131,7 @@ public static class DataSet
 			return false;
 	}
 
+	//데이터셋에서 데이터 가져오기
 	public static int DataSet_Get(int a, ref int b)
 	{
 		int m_GemNumber = 0;
@@ -141,7 +142,11 @@ public static class DataSet
 				m_GemNumber = DataSet_Search (gem_DataSet_2);
 			else if (a == 3)
 				m_GemNumber = DataSet_Search (gem_DataSet_3);
-			
+			else if (a == 4)
+				m_GemNumber = DataSet_Search (gem_DataSet_4);
+			else if (a == 5)
+				m_GemNumber = DataSet_Search (gem_DataSet_5);
+
 			if (m_GemNumber == 6) 
 			{
 				free_Chance_Count = 5;
@@ -153,6 +158,7 @@ public static class DataSet
 		return m_GemNumber;
 	}
 
+	//보여줄 보석 순서 가져오기
 	public static int SelectSet_Get(int a)
 	{
 		int m_SelectNumber = 0;

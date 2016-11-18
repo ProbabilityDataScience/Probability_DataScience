@@ -24,10 +24,10 @@ public class Board : MonoBehaviour {
 			isRun = true;
 
 			run_Count++;
+			Get_Selected_Gem_Number ();
 			Square_Get_Data();
 			Print_Square_Number();
 			Check_All_Data();
-			Get_Selected_Gem_Number ();
 
 			for(int i = 0; i < 5; i++) {
 				Square_Line_1[i].RunSymbol();
@@ -37,7 +37,21 @@ public class Board : MonoBehaviour {
 				Square_Line_5[i].RunSymbol();
 			}
 			StartCoroutine(Wait_Stop(2));
+
 		}
+	}
+
+	public int Money_Return()
+	{
+		int return_Multi = 0;
+
+		for (int i = 0; i < checked_Line.Length; i++) 
+		{
+			if (checked_Line [i] == true)
+				return_Multi++;
+		}
+
+		return return_Multi;
 	}
 
 	private IEnumerator Wait_Stop(float _time)
@@ -46,16 +60,18 @@ public class Board : MonoBehaviour {
 		Stop();
 	}
 
-	public void Get_Selected_Gem_Number()
+	private void Get_Selected_Gem_Number()
 	{
 		DataSet.selected_Gem = DataSet.SelectSet_Get (1);
+		Debug.Log ("Circle " + run_Count + " selected Gem Number : " + DataSet.selected_Gem);
 	}
 
 	// 종료
-	public void Stop()
+	private void Stop()
 	{
 		StartCoroutine(StopAni());
 	}
+
 	private IEnumerator StopAni()
 	{
 		// 라인1
@@ -84,6 +100,11 @@ public class Board : MonoBehaviour {
 			yield return new WaitForSeconds(0.06f);
 		}
 		isRun = false;
+
+		int Multi = Money_Return() * GameManager.m.bet_Money_Multi;
+		GameManager.m.total_Money += Multi;
+		GameManager.m.creditNum.changeText(GameManager.m.total_Money);
+
 	}
 
 	//라인 비교
@@ -108,7 +129,7 @@ public class Board : MonoBehaviour {
 		checked_Line_Count++;
 	}
 
-	public void Vertical_Line_Check()
+	private void Vertical_Line_Check()
 	{
 		Square[] Squares = new Square[5];
 
@@ -145,7 +166,7 @@ public class Board : MonoBehaviour {
 		return Squares;
 	}
 
-	public void Diagonal_Line_Check(Square A, Square B, Square C, Square D, Square E)
+	private void Diagonal_Line_Check(Square A, Square B, Square C, Square D, Square E)
 	{
 		Square[] Squares = new Square[5];
 		Squares [0] = A;
@@ -157,7 +178,7 @@ public class Board : MonoBehaviour {
 			
 	}
 
-	public void Horizental_Line_Check()
+	private void Horizental_Line_Check()
 	{
 		Square[] Squares;
 
@@ -172,13 +193,12 @@ public class Board : MonoBehaviour {
 	}
 
 	//모든 라인 데이터 비교
-	public void Check_All_Data()
+	private void Check_All_Data()
 	{
 		for (int i = 0; i < checked_Line.Length; i++)
 			checked_Line [i] = false;
 		
 		checked_Line_Count = 0;
-		Square[] Squares = new Square[5];
 
 		Vertical_Line_Check ();
 
@@ -196,7 +216,7 @@ public class Board : MonoBehaviour {
 
 
 	//각 상자 보석 번호 출력
-	public void Print_Square_Number()
+	private void Print_Square_Number()
 	{
 		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Line 1 - " + Square_Line_1 [0].Get_Square_Data () + " : " + Square_Line_1 [1].Get_Square_Data () + " : " + Square_Line_1 [2].Get_Square_Data () + " : " +
 			Square_Line_1 [3].Get_Square_Data () + " : " + Square_Line_1 [4].Get_Square_Data ());
@@ -212,7 +232,7 @@ public class Board : MonoBehaviour {
 
 
 	//결과 콘솔 출력
-	public void Print_Check_Line()
+	private void Print_Check_Line()
 	{
 		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Vertical Line - " + checked_Line [0] + " : " + checked_Line [1] + " : " + checked_Line [2] + " : " + checked_Line [3] + " : " + checked_Line [4]);
 		Debug.Log ("Circle : " + run_Count + " " + "-> " + "Horizental Line - " + checked_Line [5] + " : " + checked_Line [6] + " : " + checked_Line [7] + " : " + checked_Line [8] + " : " + checked_Line [9]);
@@ -220,7 +240,7 @@ public class Board : MonoBehaviour {
 	}
 
 	//상자 보석 숫자 가져오기
-	public void Square_Get_Data()
+	private void Square_Get_Data()
 	{
 		for (int i = 0; i < 5; i++) 
 		{
@@ -232,7 +252,7 @@ public class Board : MonoBehaviour {
 		}
 	}
 
-	public int Calculate_Return_Multiple()
+	private int Calculate_Return_Multiple()
 	{
 		int multiple_Count = 0;
 

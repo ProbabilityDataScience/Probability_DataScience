@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	public Board board;
 	public int total_Money;
 	public int bet_Money;
+	public int bet_Money_Multi;
 
 	public CustomNumber creditNum;
 	public CustomNumber betNum;
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour {
 	void Awake()
 	{
 		m = this;
+
+		bet_Money = 10;
+		bet_Money_Multi = 2;
 
 		creditNum.changeText(total_Money);
 		betNum.changeText(bet_Money);
@@ -36,40 +40,50 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+
+
 	public void ChangeBetNum()
 	{
 		if(board.isRun == false) {
 			switch(bet_Money) {
 				case 10:
 					bet_Money = 20;
+					bet_Money_Multi = 4;
 					break;
 
 				case 20:
 					bet_Money = 30;
+					bet_Money_Multi = 6;
 					break;
 
 				case 30:
 					bet_Money = 50;
+					bet_Money_Multi = 10;
 					break;
 
 				case 50:
 					bet_Money = 100;
+					bet_Money_Multi = 20;
 					break;
 
 				case 100:
 					bet_Money = 200;
+					bet_Money_Multi = 40;
 					break;
 
 				case 200:
 					bet_Money = 500;
+					bet_Money_Multi = 100;
 					break;
 
 				case 500:
 					bet_Money = 1000;
+					bet_Money_Multi = 200;	
 					break;
 
 				case 1000:
 					bet_Money = 10;
+					bet_Money_Multi = 2;
 					break;
 			}
 			betNum.changeText(bet_Money);
