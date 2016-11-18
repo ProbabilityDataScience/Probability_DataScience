@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour {
 	{
 		m = this;
 
+		// 돈 정보 업데이트
+		total_Money = DataManager.currentMoney;
+
 		bet_Money = 10;
 		bet_Money_Multi = 2;
 

@@ -29,8 +29,6 @@ public class NetworkSession : MonoBehaviour {
             case RequestType.GET:
                 webRequest.Method = "GET";
 
-                print(ReadData());
-
                 break;
 
             case RequestType.PUT:
@@ -42,8 +40,6 @@ public class NetworkSession : MonoBehaviour {
             case RequestType.POST:
                 webRequest.Method = "POST";
                 WriteData(CreateJsonData(protocol, datas));
-                print(ReadData());
-
                 break;
 
 
@@ -63,13 +59,18 @@ public class NetworkSession : MonoBehaviour {
         }
     }
     // Datas 안들어감
-    private string ReadData()
+    public DataClass ReadData()
     {
         using (HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse)
         {
             StreamReader reader = new StreamReader(response.GetResponseStream());
 
-            return reader.ReadToEnd();
+			string d = reader.ReadToEnd();
+			Debug.Log(d);
+
+			DataClass dc = JsonUtility.FromJson<DataClass>(d);
+
+			return dc;
         }
     }
 

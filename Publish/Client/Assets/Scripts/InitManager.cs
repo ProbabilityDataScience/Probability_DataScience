@@ -13,9 +13,12 @@ public class InitManager : MonoBehaviour {
 
 	private enum State { NotLogin, Loginning, Logined };
 	private State state;
+	private NetworkSession network;
 
 	void Awake()
 	{
+		network = this.GetComponent<NetworkSession>();
+
 		state = State.NotLogin;
 		// DOTween 초기화
 		DOTween.Init();
@@ -50,18 +53,26 @@ public class InitManager : MonoBehaviour {
 	private void FBLogin_Callback(ILoginResult result)
 	{
 		if(FB.IsLoggedIn) { // 로그인됨
-			// 계정 정보를 Facebook으로 하고 저장
-			DataManager.accountType = "Facebook";
-			DataManager.SaveAccountData();
 
 			Debug.Log("Successful login with facebook");
 			Debug.Log("TokenID : " + AccessToken.CurrentAccessToken.UserId);
 
-			// 토근 값 넣어줌
-			this.GetComponent<NetworkSession>().datas.Add(AccessToken.CurrentAccessToken.UserId);
-			this.GetComponent<NetworkSession>().type = RequestType.POST;
-			this.GetComponent<NetworkSession>().protocol = RequestProtocol.LoginWithFacebook;
-			this.GetComponent<NetworkSession>().Request();
+			// 서버로 로그인 보내줌
+			network.datas.Add(AccessToken.CurrentAccessToken.UserId); // 토큰값
+			if(DataManager.accountType == "NoData") // 처음 로그인 했는가?
+				network.datas.Add("Yes");
+			else
+				network.datas.Add("No");
+			network.type = RequestType.POST;
+			network.protocol = RequestProtocol.FacebookLogin;
+			network.Request();
+
+			// 돈 정보를 받아옴
+			//DataManager.currentMoney = int.Parse(network.ReadData().datas[0]);
+
+			// 계정 정보를 Facebook으로 하고 저장
+			DataManager.accountType = "Facebook";
+			DataManager.SaveAccountData();
 
 			Login_Complete();
 		} else {
@@ -90,7 +101,6 @@ public class InitManager : MonoBehaviour {
 	// 다음 Scene으로 넘어감
 	public void MoveNextScene()
 	{
-		Debug.Log("MoveNextScene");
 		SceneManager.LoadScene("MainScene");
 	}
 	private IEnumerator MoveNextScene_ani()
