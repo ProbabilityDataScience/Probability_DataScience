@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager m;
 
+	public AnimationManager animationManager;
 	public Board board;
 	public int total_Money;
 	public int bet_Money;
@@ -25,6 +26,11 @@ public class GameManager : MonoBehaviour {
 
 		creditNum.changeText(total_Money);
 		betNum.changeText(bet_Money);
+	}
+
+	void Start()
+	{
+		animationManager.Play();
 	}
 
 	public void Bet_Button_Function()

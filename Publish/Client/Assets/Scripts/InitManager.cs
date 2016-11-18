@@ -24,7 +24,9 @@ public class InitManager : MonoBehaviour {
 		DOTween.Init();
 
 		// 페북 SDK 초기화
-		FB.Init(InitFB_Complete);
+		//FB.Init(InitFB_Complete);
+		DataManager.currentMoney = 100000;
+		Login_Complete();
 	}
 
 	// 페북 초기화 성공
@@ -101,11 +103,14 @@ public class InitManager : MonoBehaviour {
 	// 다음 Scene으로 넘어감
 	public void MoveNextScene()
 	{
-		SceneManager.LoadScene("MainScene");
+		StartCoroutine(MoveNextScene_ani());
 	}
 	private IEnumerator MoveNextScene_ani()
 	{
-		yield return new WaitForSeconds(2f);
+		TitleImage.rectTransform.DOAnchorPosX(700f, 0.5f).SetEase(Ease.InBack);
+		UIPanel.rectTransform.DOAnchorPosX(-1500f, 0.5f).SetEase(Ease.InBack);
+		yield return new WaitForSeconds(1f);
+		SceneManager.LoadScene("MainScene");
 	}
 
 	// Guest버튼 누름
