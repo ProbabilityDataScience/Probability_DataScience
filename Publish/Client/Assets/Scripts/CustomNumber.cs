@@ -51,10 +51,15 @@ public class CustomNumber : MonoBehaviour {
 	}
 
 	// 숫자 변경
-	public void ChangeNum(int num)
+	public void ChangeNum(int num, bool changeImmediately = false)
 	{
 		number = num;
 		numberGap = (number - currentNumber) / 10;
+
+		if(changeImmediately == true) {
+			currentNumber = num;
+			changeText(currentNumber);
+		}
 	}
 
 	// 텍스트 변경(내부함수)

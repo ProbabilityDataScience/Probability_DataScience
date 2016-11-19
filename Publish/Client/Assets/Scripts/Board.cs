@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class Board : MonoBehaviour {
 
@@ -9,6 +11,13 @@ public class Board : MonoBehaviour {
 	public Square[] Square_Line_3 = new Square[5];
 	public Square[] Square_Line_4 = new Square[5];
 	public Square[] Square_Line_5 = new Square[5];
+	// 라인
+	public Image[] horizontalLines;
+	public Image[] verticalLines;
+	public Image[] crossLines;
+	// WinPanel과 EarnNum
+	public Image winPanel;
+	public CustomNumber earnNum;
 	//라인 비교 확인 카운트 변수
 	int checked_Line_Count;
 	//확인된 라인
@@ -17,11 +26,33 @@ public class Board : MonoBehaviour {
 
 	public bool isRun = false;
 
+	void Awake()
+	{
+		// 라인들 다 안보이게 함
+		HideAllLines();
+	}
+
+	// 모든 라인들 숨김
+	private void HideAllLines()
+	{
+		foreach(Image l in horizontalLines) {
+			l.GetComponent<CanvasGroup>().alpha = 0;
+		}
+		foreach(Image l in verticalLines) {
+			l.GetComponent<CanvasGroup>().alpha = 0;
+		}
+		foreach(Image l in crossLines) {
+			l.GetComponent<CanvasGroup>().alpha = 0;
+		}
+		winPanel.GetComponent<CanvasGroup>().alpha = 0;
+	}
+
 	// 시작
 	public void Run()
 	{
 		if(isRun == false) {
 			isRun = true;
+			HideAllLines();
 
 			run_Count++;
 			Get_Selected_Gem_Number ();
@@ -40,24 +71,22 @@ public class Board : MonoBehaviour {
 
 		}
 	}
+	private IEnumerator Wait_Stop(float _time)
+	{
+		yield return new WaitForSeconds(_time);
+		Stop();
+	}
 
 	public int Money_Return()
 	{
 		int return_Multi = 0;
 
-		for (int i = 0; i < checked_Line.Length; i++) 
-		{
-			if (checked_Line [i] == true)
+		for(int i = 0; i < checked_Line.Length; i++) {
+			if(checked_Line[i] == true)
 				return_Multi++;
 		}
 
 		return return_Multi;
-	}
-
-	private IEnumerator Wait_Stop(float _time)
-	{
-		yield return new WaitForSeconds (_time);
-		Stop();
 	}
 
 	private void Get_Selected_Gem_Number()
@@ -71,7 +100,7 @@ public class Board : MonoBehaviour {
 	{
 		StartCoroutine(StopAni());
 	}
-
+	// 보석들이 종료되는 애니메이션
 	private IEnumerator StopAni()
 	{
 		// 라인1
@@ -99,12 +128,71 @@ public class Board : MonoBehaviour {
 			Square_Line_5[i].StopSymbol(Square_Line_5[i].Get_Square_Data());
 			yield return new WaitForSeconds(0.06f);
 		}
+		
+		// 라인 애니메이션 실행
+		yield return LineAni();
 		isRun = false;
+	}
+	// 라인들이 표시되는 애니메이션
+	private IEnumerator LineAni()
+	{
+		bool[] isShow_horizontal = { false, false, false, false, false };
+		bool[] isShow_vertical = { false, false, false, false, false };
+		bool[] isShow_cross = { false, false};
+		bool isHas = false;
 
-		int Multi = Money_Return() * GameManager.m.bet_Money_Multi;
-		GameManager.m.total_Money += Multi;
-		GameManager.m.creditNum.ChangeNum(GameManager.m.total_Money);
+		// 한 배열에 있는 CheckLine을 가로/세로/대각선으로 나눔
+		// 가로
+		for(int i = 0; i < 5; i++) {
+			if(checked_Line[i] == true) {
+				isShow_horizontal[i] = true;
+				isHas = true;
+			}
+		}
+		// 세로
+		for(int i = 5; i < 10; i++) {
+			if(checked_Line[i] == true) {
+				isShow_vertical[i - 5] = true;
+				isHas = true;
+			}
+		}
+		// 대각선
+		for(int i = 10; i < 12; i++) {
+			if(checked_Line[i] == true) {
+				isShow_cross[i - 10] = true;
+				isHas = true;
+			}
+		}
+		// 라인이 한 개라도 있는가?
+		if(isHas == true) {
+			yield return new WaitForSeconds(0.5f);
 
+			// 해당하는 라인 보여줌
+			for(int i = 0; i < 5; i++) {
+				if(isShow_horizontal[i] == true) {
+					horizontalLines[i].GetComponent<CanvasGroup>().DOFade(1f, 0.6f);
+				}
+				if(isShow_vertical[i] == true) {
+					verticalLines[i].GetComponent<CanvasGroup>().DOFade(1f, 0.6f);
+				}
+			}
+			for(int i = 0; i < 2; i++) {
+				if(isShow_cross[i] == true)
+					crossLines[i].GetComponent<CanvasGroup>().DOFade(1f, 0.6f);
+			}
+			yield return new WaitForSeconds(0.8f);
+
+			// WinPanel 보여줌
+			winPanel.GetComponent<CanvasGroup>().DOFade(1f, 0.4f);
+			earnNum.ChangeNum(0, true);
+			yield return new WaitForSeconds(0.6f);
+
+			// 얻은 돈을 계산하고 EarnNum에 보여줌
+			int get = Money_Return() * GameManager.m.bet_Money_Multi;
+			GameManager.m.total_Money += get;
+			GameManager.m.creditNum.ChangeNum(GameManager.m.total_Money);
+			earnNum.ChangeNum(get);
+		}
 	}
 
 	//라인 비교

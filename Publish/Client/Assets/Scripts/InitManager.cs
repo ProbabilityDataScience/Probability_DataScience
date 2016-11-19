@@ -24,9 +24,7 @@ public class InitManager : MonoBehaviour {
 		DOTween.Init();
 
 		// 페북 SDK 초기화
-		//FB.Init(InitFB_Complete);
-		DataManager.currentMoney = 100000;
-		Login_Complete();
+		FB.Init(InitFB_Complete);
 	}
 
 	// 페북 초기화 성공
@@ -71,6 +69,7 @@ public class InitManager : MonoBehaviour {
 
 			// 돈 정보를 받아옴
 			//DataManager.currentMoney = int.Parse(network.ReadData().datas[0]);
+			DataManager.currentMoney = 100000;
 
 			// 계정 정보를 Facebook으로 하고 저장
 			DataManager.accountType = "Facebook";
