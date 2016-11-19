@@ -37,12 +37,12 @@ public class GameManager : MonoBehaviour {
 	{
 		if(board.isRun == false) {
 			if(total_Money > bet_Money) {
-				if(DataSet.free_Chance_Count > 0)
-					DataSet.free_Chance_Count--;
-				else {
+				//if(DataSet.free_Chance_Count > 0)
+				//	DataSet.free_Chance_Count--;
+				//else {
 					total_Money -= bet_Money;
 					creditNum.changeText(total_Money);
-				}
+				//}
 
 				board.Run();
 			}

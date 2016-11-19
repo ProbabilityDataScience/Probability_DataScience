@@ -67,6 +67,10 @@ public class Square : MonoBehaviour {
 
 		symbols[index].sprite = symbolSprites[symbolNum];
 	}
+	private int GetSymbolNum()
+	{
+		return Random.Range(0, symbolSprites.Length);
+	}
 
 	// --------- 애니메이션 관련 함수들
 
@@ -93,7 +97,7 @@ public class Square : MonoBehaviour {
 	{
 		currentSymbolIndex = 1;
 		if(isEnd == false)
-			ChangeSymbol(2, Random.Range(0, symbolSprites.Length));
+			ChangeSymbol(2, GetSymbolNum());
 		else {
 			ChangeSymbol(2, endNum);
 
@@ -106,7 +110,7 @@ public class Square : MonoBehaviour {
 	{
 		currentSymbolIndex = 2;
 		if(isEnd == false)
-			ChangeSymbol(0, Random.Range(0, symbolSprites.Length));
+			ChangeSymbol(0, GetSymbolNum());
 		else {
 			ChangeSymbol(0, endNum);
 
@@ -119,7 +123,7 @@ public class Square : MonoBehaviour {
 	{
 		currentSymbolIndex = 0;
 		if(isEnd == false)
-			ChangeSymbol(1, Random.Range(0, symbolSprites.Length));
+			ChangeSymbol(1, GetSymbolNum());
 		else {
 			ChangeSymbol(1, endNum);
 
