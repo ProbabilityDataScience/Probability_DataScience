@@ -21,6 +21,9 @@ public class CustomNumber : MonoBehaviour {
 	private float commaWidth;
 	private float commaHeight;
 
+	private int currentNumber;
+	private int numberGap;
+
 	// Use this for initialization
 	void Awake () {
 		numWidth = numSprite[0].textureRect.width;
@@ -28,16 +31,34 @@ public class CustomNumber : MonoBehaviour {
 		commaWidth = comma.textureRect.width;
 		commaHeight = comma.textureRect.height;
 
+		currentNumber = number;
 		changeText(number);
 	}
 
 	void Update()
 	{
-		//changeText(number);
+		if(currentNumber != number) {
+			// gap을 더했더니 초과하는 경우
+			if((numberGap > 0 && currentNumber + numberGap >= number) || (numberGap < 0 && currentNumber + numberGap <= number) || numberGap == 0) {
+				// 해당 숫자로 고정
+				currentNumber = number;
+			} else {
+				// 계속 gap을 더함
+				currentNumber += numberGap;
+			}
+			changeText(currentNumber);
+		}
 	}
 
-	// 텍스트 변경
-	public void changeText(int num)
+	// 숫자 변경
+	public void ChangeNum(int num)
+	{
+		number = num;
+		numberGap = (number - currentNumber) / 10;
+	}
+
+	// 텍스트 변경(내부함수)
+	private void changeText(int num)
 	{
 		// 글자 수 계산
 		int numCount = 0;

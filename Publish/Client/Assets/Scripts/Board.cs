@@ -103,7 +103,7 @@ public class Board : MonoBehaviour {
 
 		int Multi = Money_Return() * GameManager.m.bet_Money_Multi;
 		GameManager.m.total_Money += Multi;
-		GameManager.m.creditNum.changeText(GameManager.m.total_Money);
+		GameManager.m.creditNum.ChangeNum(GameManager.m.total_Money);
 
 	}
 

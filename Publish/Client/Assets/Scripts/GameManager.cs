@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour {
 		bet_Money = 10;
 		bet_Money_Multi = 2;
 
-		creditNum.changeText(total_Money);
-		betNum.changeText(bet_Money);
+		creditNum.ChangeNum(total_Money);
+		betNum.ChangeNum(bet_Money);
 	}
 
 	void Start()
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 				//	DataSet.free_Chance_Count--;
 				//else {
 					total_Money -= bet_Money;
-					creditNum.changeText(total_Money);
+					creditNum.ChangeNum(total_Money);
 				//}
 
 				board.Run();
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour {
 					bet_Money_Multi = 2;
 					break;
 			}
-			betNum.changeText(bet_Money);
+			betNum.ChangeNum(bet_Money);
 		}
 	}
 }
