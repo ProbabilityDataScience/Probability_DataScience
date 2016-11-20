@@ -82,42 +82,42 @@ public class GameManager : MonoBehaviour {
 			switch(bet_Money) {
 				case 10:
 					bet_Money = 20;
-					bet_Money_Multi = 4;
+					bet_Money_Multi = 14;
 					break;
 
 				case 20:
 					bet_Money = 30;
-					bet_Money_Multi = 6;
+					bet_Money_Multi = 21;
 					break;
 
 				case 30:
 					bet_Money = 50;
-					bet_Money_Multi = 10;
+					bet_Money_Multi = 35;
 					break;
 
 				case 50:
 					bet_Money = 100;
-					bet_Money_Multi = 20;
+					bet_Money_Multi = 70;
 					break;
 
 				case 100:
 					bet_Money = 200;
-					bet_Money_Multi = 40;
+					bet_Money_Multi = 140;
 					break;
 
 				case 200:
 					bet_Money = 500;
-					bet_Money_Multi = 100;
+					bet_Money_Multi = 350;
 					break;
 
 				case 500:
 					bet_Money = 1000;
-					bet_Money_Multi = 200;	
+					bet_Money_Multi = 700;	
 					break;
 
 				case 1000:
 					bet_Money = 10;
-					bet_Money_Multi = 2;
+					bet_Money_Multi = 7;
 					break;
 			}
 			betNum.ChangeNum(bet_Money);

@@ -58,13 +58,13 @@ public class ProbabilityDraw : MonoBehaviour {
 	{
 		bool return_value = false;
 
-		if (data1 == data2) 
+		if (data1 == data2 || data1 == 6 || data2 == 6) 
 		{
-			if (data2 == data3) 
+			if (data2 == data3 || data2 == 6 || data3 == 6) 
 			{
-				if (data3 == data4) 
+				if (data3 == data4 || data3 == 6 || data4 == 6) 
 				{
-					if (data4 == data5)
+					if (data4 == data5 || data4 == 6 || data5 == 6)
 						return_value = true;
 				}
 			}
@@ -115,7 +115,7 @@ public class ProbabilityDraw : MonoBehaviour {
 				return_Money_Count++;
 
 		if (bet_Money == 10)
-			return_Money_Multi = 8;
+			return_Money_Multi = 7;
 		else if (bet_Money == 20)
 			return_Money_Multi = 16;
 		else if (bet_Money == 50)
