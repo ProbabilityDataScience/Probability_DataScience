@@ -6,6 +6,6 @@
  * Time: 오전 10:52
  */
 
-$jsonData = json_decode("{\"Test\" : \"1\", \"Test2\" : \"2\"}");
+$jsonData = json_decode("{\"Money\" : \"1\", \"Test2\" : \"2\"}");
 
 print $jsonData->Test;

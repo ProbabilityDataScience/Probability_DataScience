@@ -76,9 +76,7 @@ public class NetworkSession : MonoBehaviour {
     private string CreateJsonData(RequestProtocol protocol, List<string> datas)
     {
         DataClass test = new DataClass(protocol, datas);
-
         print(JsonUtility.ToJson(test, prettyPrint: true));
-
         return JsonUtility.ToJson(test, prettyPrint:true);
     }
 }

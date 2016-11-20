@@ -10,15 +10,29 @@
 //$table = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 //$key = array_shift($request);
 
+require ("Login.php");
+
+class Protocol {
+    static public $Login  = 0;
+    static public $blue = 1;
+    static public $gary = 3;
+    static public $aqua = 4;
+}
+
 error_reporting(E_ALL&~E_NOTICE&~E_WARNING);
 
 $method = $_SERVER['REQUEST_METHOD'];
 
 $jsonData = json_decode(file_get_contents('php://input'), true);
 
-$result = "protocol : ";
-
 $protocol = $jsonData["protocol"];
+
+if($protocol === Protocol::$Login)
+{
+    LoginProcess($jsonData["datas"]);
+}
+
+$result = "protocol : ";
 
 $result .= $protocol;
 
@@ -28,5 +42,5 @@ foreach ($jsonData["datas"] as $data)
     $result .= $data;
 }
 
-echo $result;
+//echo $result;
 
