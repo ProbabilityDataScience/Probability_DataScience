@@ -93,7 +93,7 @@ public class Board : MonoBehaviour {
 
 	private void Get_Selected_Gem_Number()
 	{
-		DataSet.selected_Gem = DataSet.SelectSet_Get (1);
+		DataSet.selected_Gem = DataSet.SelectSet_Get (DataSet.gem_SelectSet_Count);
 		Debug.Log ("Circle " + run_Count + " selected Gem Number : " + DataSet.selected_Gem);
 	}
 

@@ -3,7 +3,10 @@ using System.Collections;
 
 public static class DataSet 
 {
-	//----------------------------------- Gem Select Sets --------------------------------------
+	public const int gem_SelectSet_Count = 1;
+	public const int gem_DataSet_Count = 3;
+
+	//------------------------------------- Gem Select Sets -----------------------------------------
 	/*-- () Select_Set 1 () --
 	 *  0.17 0.17 0.17 0.17 0.16 0.16
 	 */
@@ -157,6 +160,7 @@ public static class DataSet
 		
 		return m_GemNumber;
 	}
+
 
 	//보여줄 보석 순서 가져오기
 	public static int SelectSet_Get(int a)
