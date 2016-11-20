@@ -64,8 +64,8 @@ public class InitManager : MonoBehaviour {
 			else
 				network.datas.Add("No");
 			network.type = RequestType.POST;
-			network.protocol = RequestProtocol.FacebookLogin;
-			network.Request();
+			network.protocol = RequestProtocol.Login;
+			//network.Request();
 
 			// 돈 정보를 받아옴
 			//DataManager.currentMoney = int.Parse(network.ReadData().datas[0]);

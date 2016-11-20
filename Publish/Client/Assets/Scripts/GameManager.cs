@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour {
 				spinBtn.GetComponent<NetworkSession>().datas.Add(bet_Money.ToString()); // 배팅금액
 				spinBtn.GetComponent<NetworkSession>().datas.Add(DateTime.Now.ToString()); // 클릭시간
 				spinBtn.GetComponent<NetworkSession>().datas.Add(lineCount.ToString()); // 결과(라인의 수)
+				spinBtn.GetComponent<NetworkSession>().Request();
 			}
 		}
 	}
@@ -125,6 +126,6 @@ public class GameManager : MonoBehaviour {
 		betBtn.GetComponent<NetworkSession>().datas.Clear();
 		betBtn.GetComponent<NetworkSession>().datas.Add(DataManager.fbUserID);
 		betBtn.GetComponent<NetworkSession>().datas.Add(DateTime.Now.ToString());
-		//spinBtn.GetComponent<NetworkSession>().Request();
+		spinBtn.GetComponent<NetworkSession>().Request();
 	}
 }
