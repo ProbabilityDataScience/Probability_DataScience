@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum RequestProtocol { Test, FacebookLogin, SpinBtn, BetBtn };
+public enum RequestProtocol { Test, Login, SpinBtn, BetBtn };
 
 public class DataClass {
 
