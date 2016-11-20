@@ -204,10 +204,12 @@ public class Board : MonoBehaviour {
 		{
 			if (Squares[i].Get_Square_Data() != 6) 
 			{
-				if (Squares [i - 1].Get_Square_Data () != Squares [i].Get_Square_Data ()) 
+				if (Squares[i - 1].Get_Square_Data () != 6) 
 				{
-					all_Line_Same = false;
-					break;
+					if (Squares [i - 1].Get_Square_Data () != Squares [i].Get_Square_Data ()) {
+						all_Line_Same = false;
+						break;
+					}
 				}
 			}
 		}

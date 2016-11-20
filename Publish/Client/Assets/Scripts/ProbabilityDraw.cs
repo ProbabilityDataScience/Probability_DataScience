@@ -48,7 +48,7 @@ public class ProbabilityDraw : MonoBehaviour {
 
 		for (int i = 0; i < 5; i++) 
 			for (int j = 0; j < 5; j++) 
-				dataDisplay[i,j] = DataSet.DataSet_Get (4, ref freeCount[i,j]);
+				dataDisplay[i,j] = DataSet.DataSet_Get (3, ref freeCount[i,j]);
 		
 		yield return null;
 		StartCoroutine(Roulette());
@@ -76,9 +76,9 @@ public class ProbabilityDraw : MonoBehaviour {
 	void Debug_OutPut()
 	{
 		for(int i = 0 ; i < 5 ; i++)
-			Debug.Log ("Circle " + circle + " -> " + dataDisplay [i, 0] + " : " + dataDisplay [i, 1] + " : " + dataDisplay [i, 2] + " : " + dataDisplay [i, 3] + " : " + dataDisplay [i, 4]);
+			Debug.Log ("Circle " + circle + " -> " + "Line " + i + " : " +  dataDisplay [i, 0] + " : " + dataDisplay [i, 1] + " : " + dataDisplay [i, 2] + " : " + dataDisplay [i, 3] + " : " + dataDisplay [i, 4]);
 
-		//Debug.Log(
+		Debug.Log ("Circle " + circle + " -> " + " Completed Line : " + return_Money_Count);
 	}
 
 	IEnumerator Roulette()
@@ -87,6 +87,8 @@ public class ProbabilityDraw : MonoBehaviour {
 		money -= bet_Money;
 		RepeatCount -= 1;
 
+		return_Money_Count = 0;
+		return_Money_Multi = 0;
 
 		int index = 0;
 
@@ -113,19 +115,19 @@ public class ProbabilityDraw : MonoBehaviour {
 				return_Money_Count++;
 
 		if (bet_Money == 10)
-			return_Money_Multi = 5;
+			return_Money_Multi = 8;
 		else if (bet_Money == 20)
-			return_Money_Multi = 4;
+			return_Money_Multi = 16;
 		else if (bet_Money == 50)
-			return_Money_Multi = 10;
-		else if (bet_Money == 100)
-			return_Money_Multi = 20;
-		else if (bet_Money == 200)
 			return_Money_Multi = 40;
+		else if (bet_Money == 100)
+			return_Money_Multi = 80;
+		else if (bet_Money == 200)
+			return_Money_Multi = 160;
 		else if (bet_Money == 500)
-			return_Money_Multi = 100;
+			return_Money_Multi = 400;
 		else if (bet_Money == 1000)
-			return_Money_Multi = 200;
+			return_Money_Multi = 800;
 
 		money += return_Money_Count * return_Money_Multi;
 
@@ -134,6 +136,8 @@ public class ProbabilityDraw : MonoBehaviour {
 			Instantiate (cube, new Vector3 (2f * intervalOfCube, (float)money, 0), Quaternion.identity);
 			intervalOfCube += 1;
 		}
+
+		Debug_OutPut ();
 
 		if (RepeatCount > 0)
 		{ 

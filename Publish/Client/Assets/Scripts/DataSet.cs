@@ -45,14 +45,11 @@ public static class DataSet
 	public static int[] gem_DataSet_2 = {121600,5776,5776,5776,5776,5776,1520};
 
 	/*-- () Data_Set 3 () --
+	 *	 0.6363..		 0.07239..		0.07239..		0.07239..		0.07239..		0.07239..		0.001
 	 * 
-	 *    0.7		  0.058		 	  0.058	 		    0.058			0.058			 0.058			0.01		//Probability of each gems
-	 * 	 0.343	   1.95112e-04	   1.95112e-04		1.95112e-04	 	 1.95112e-04	  1.95112e-04	   1e-06		//3x Multiply				
-	 *  0.16807	   6.56357e-07     6.56357e-07  	6.56357e-07 	 6.56357e-07 	  6.56357e-07      1e-10		//5x Multiply
-	 * 
-	 * Total : 406000 count Data set
+	 * Total : 28054000 count Data set
 	 */
-	public static int[] gem_DataSet_3 = {284200,23548,23548,23548,23548,23548,4060};
+	public static int[] gem_DataSet_3 = {378000,43000,43000,43000,43000,43000,1000};
 
 	/*-- () Data_Set 4 () --
 	 * 
@@ -150,13 +147,15 @@ public static class DataSet
 			else if (a == 5)
 				m_GemNumber = DataSet_Search (gem_DataSet_5);
 
-			if (m_GemNumber == 6) 
-			{
+			if (m_GemNumber == 6) {
 				free_Chance_Count = 5;
 				b = 5;
 			}
-		} else
-			m_GemNumber = 7;
+		} else 
+		{
+			b--;
+			m_GemNumber = 6;
+		}
 		
 		return m_GemNumber;
 	}
