@@ -153,7 +153,7 @@ public static class DataSet
 				b = 5;
 			}
 		} else
-			m_GemNumber = 7;
+			m_GemNumber = 6;
 		
 		return m_GemNumber;
 	}
