@@ -15,6 +15,7 @@ public class Square : MonoBehaviour {
 
 	private Sequence twinSeq;
 	private bool isEnd = true;
+	private bool isFixed = false;
 	private int endNum;
 	private int currentSymbolIndex;
 
@@ -41,7 +42,7 @@ public class Square : MonoBehaviour {
 			square_Data = DataSet.DataSet_Get (DataSet.gem_DataSet_Count, ref free_Count);
 			if (square_Data == 0)
 				square_Data = DataSet.selected_Gem;
-			else 
+			else if(square_Data != 6)
 				Random_Get_Data ();
 		}
 		else
@@ -70,7 +71,21 @@ public class Square : MonoBehaviour {
 	}
 	private int GetSymbolNum()
 	{
-		return Random.Range(0, symbolSprites.Length);
+		int tmp=0;
+		int t = DataSet.DataSet_Get(4, ref tmp);
+
+		if(t == 0)
+			return DataSet.selected_Gem;
+		else if(t == 6)
+			return t;
+		else {
+			int t2;
+			while(true) {
+				t2 = Random.Range(0, 6);
+				if(t2 != DataSet.selected_Gem) break;
+			}
+			return t2;
+		}
 	}
 
 	// --------- 애니메이션 관련 함수들
@@ -78,13 +93,22 @@ public class Square : MonoBehaviour {
 	// 보석 애니메이션 재생
 	public void RunSymbol()
 	{
-		isEnd = false;
+		if(square_Data != 6)
+			isFixed = false;
 
-		ChangeSymbol(0, endNum);
-		if(!twinSeq.IsActive())
-			twinSeq.Play();
-		else
-			twinSeq.Restart();
+		if(isFixed == false) { 
+			isEnd = false;
+
+			// 만약 마지막 보석인 경우 fix를 함
+			if(square_Data == 6)
+				isFixed = true;
+
+			ChangeSymbol(0, endNum);
+			if(!twinSeq.IsActive())
+				twinSeq.Play();
+			else
+				twinSeq.Restart();
+		}
 	}
 	// 보석 애니메이션 중단
 	public void StopSymbol(int num)

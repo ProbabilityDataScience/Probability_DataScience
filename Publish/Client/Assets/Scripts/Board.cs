@@ -21,7 +21,7 @@ public class Board : MonoBehaviour {
 	//라인 비교 확인 카운트 변수
 	int checked_Line_Count;
 	//확인된 라인
-	bool[] checked_Line = new bool[12];
+	public bool[] checked_Line = new bool[12];
 	int run_Count = 0;
 
 	public bool isRun = false;
@@ -67,6 +67,8 @@ public class Board : MonoBehaviour {
 				Square_Line_4[i].RunSymbol();
 				Square_Line_5[i].RunSymbol();
 			}
+			int get = Money_Return() * GameManager.m.bet_Money_Multi;
+			GameManager.m.total_Money += get;
 			StartCoroutine(Wait_Stop(2));
 
 		}
@@ -189,7 +191,6 @@ public class Board : MonoBehaviour {
 
 			// 얻은 돈을 계산하고 EarnNum에 보여줌
 			int get = Money_Return() * GameManager.m.bet_Money_Multi;
-			GameManager.m.total_Money += get;
 			GameManager.m.creditNum.ChangeNum(GameManager.m.total_Money);
 			earnNum.ChangeNum(get);
 		}
@@ -200,16 +201,15 @@ public class Board : MonoBehaviour {
 	{
 		bool all_Line_Same = true;
 
+		int firstSqareNum = Squares[0].Get_Square_Data();
+
 		for (int i = 1; i < 5; i++) 
 		{
 			if (Squares[i].Get_Square_Data() != 6) 
 			{
-				if (Squares[i - 1].Get_Square_Data () != 6) 
-				{
-					if (Squares [i - 1].Get_Square_Data () != Squares [i].Get_Square_Data ()) {
-						all_Line_Same = false;
-						break;
-					}
+				if(Squares[i].Get_Square_Data() != firstSqareNum) {
+					all_Line_Same = false;
+					break;
 				}
 			}
 		}

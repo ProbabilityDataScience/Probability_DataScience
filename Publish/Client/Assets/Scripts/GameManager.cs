@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System;
+using Facebook.Unity;
 
 public class GameManager : MonoBehaviour {
 
@@ -13,6 +16,9 @@ public class GameManager : MonoBehaviour {
 
 	public CustomNumber creditNum;
 	public CustomNumber betNum;
+
+	public Button betBtn;
+	public Button spinBtn;
 
 	void Awake()
 	{
@@ -35,6 +41,7 @@ public class GameManager : MonoBehaviour {
 
 	public void Bet_Button_Function()
 	{
+		int beforeMoney = total_Money;
 		if(board.isRun == false) {
 			if(total_Money > bet_Money) {
 				//if(DataSet.free_Chance_Count > 0)
@@ -45,6 +52,22 @@ public class GameManager : MonoBehaviour {
 				//}
 
 				board.Run();
+
+				// 라인의 수 계산
+				int lineCount = 0;
+				foreach(bool c in board.checked_Line) {
+					if(c == true)
+						lineCount++;
+				}
+
+				// 데이터 전송
+				spinBtn.GetComponent<NetworkSession>().datas.Clear();
+				spinBtn.GetComponent<NetworkSession>().datas.Add(DataManager.fbUserID); // 유저 토큰값
+				spinBtn.GetComponent<NetworkSession>().datas.Add(beforeMoney.ToString()); // 돌리기전 돈
+				spinBtn.GetComponent<NetworkSession>().datas.Add(total_Money.ToString()); // 돌리기후 돈
+				spinBtn.GetComponent<NetworkSession>().datas.Add(bet_Money.ToString()); // 배팅금액
+				spinBtn.GetComponent<NetworkSession>().datas.Add(DateTime.Now.ToString()); // 클릭시간
+				spinBtn.GetComponent<NetworkSession>().datas.Add(lineCount.ToString()); // 결과(라인의 수)
 			}
 		}
 	}
@@ -53,6 +76,7 @@ public class GameManager : MonoBehaviour {
 
 	public void ChangeBetNum()
 	{
+		// 배팅 금액 바꿔줌
 		if(board.isRun == false) {
 			switch(bet_Money) {
 				case 10:
@@ -97,5 +121,10 @@ public class GameManager : MonoBehaviour {
 			}
 			betNum.ChangeNum(bet_Money);
 		}
+		// 데이터 전송
+		betBtn.GetComponent<NetworkSession>().datas.Clear();
+		betBtn.GetComponent<NetworkSession>().datas.Add(DataManager.fbUserID);
+		betBtn.GetComponent<NetworkSession>().datas.Add(DateTime.Now.ToString());
+		//spinBtn.GetComponent<NetworkSession>().Request();
 	}
 }

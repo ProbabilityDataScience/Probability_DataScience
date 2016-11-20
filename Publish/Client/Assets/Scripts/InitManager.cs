@@ -73,6 +73,7 @@ public class InitManager : MonoBehaviour {
 
 			// 계정 정보를 Facebook으로 하고 저장
 			DataManager.accountType = "Facebook";
+			DataManager.fbUserID = AccessToken.CurrentAccessToken.UserId;
 			DataManager.SaveAccountData();
 
 			Login_Complete();
