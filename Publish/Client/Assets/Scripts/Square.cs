@@ -29,6 +29,7 @@ public class Square : MonoBehaviour {
 		twinSeq.Append(symbolList.DOAnchorPosY(-360f, 0.05f).SetEase(Ease.Linear).OnComplete(EndThirdSymbol));
 		twinSeq.SetLoops(-1, LoopType.Restart);
 
+
 		ChangeSymbol(0, Random.Range(0, symbolSprites.Length));
 	}
 
@@ -37,7 +38,7 @@ public class Square : MonoBehaviour {
 	{
 		if (free_Count <= 0) {
 			
-			square_Data = DataSet.DataSet_Get (4, ref free_Count);
+			square_Data = DataSet.DataSet_Get (DataSet.gem_DataSet_Count, ref free_Count);
 			if (square_Data == 0)
 				square_Data = DataSet.selected_Gem;
 			else 
