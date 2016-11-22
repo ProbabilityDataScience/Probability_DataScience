@@ -18,6 +18,14 @@ public class Board : MonoBehaviour {
 	// WinPanel과 EarnNum
 	public Image winPanel;
 	public CustomNumber earnNum;
+	// 소리들
+	public AudioClip spinRunningSound;
+	public AudioClip spinStopSound;
+	public AudioClip winSound;
+	public AudioClip failSound;
+	public AudioClip numberCount_StartSound;
+	public AudioClip numberCount_EndSound;
+
 	//라인 비교 확인 카운트 변수
 	int checked_Line_Count;
 	//확인된 라인
@@ -25,9 +33,13 @@ public class Board : MonoBehaviour {
 	int run_Count = 0;
 
 	public bool isRun = false;
+	private AudioSource audioSource_Background;
+	private AudioSource audioSource_Effect;
 
 	void Awake()
 	{
+		audioSource_Background = this.GetComponents<AudioSource>()[0];
+		audioSource_Effect = this.GetComponents<AudioSource>()[1];
 		// 라인들 다 안보이게 함
 		HideAllLines();
 	}
@@ -52,6 +64,7 @@ public class Board : MonoBehaviour {
 	{
 		if(isRun == false) {
 			isRun = true;
+			audioSource_Background.Play();
 			HideAllLines();
 
 			run_Count++;
@@ -105,32 +118,38 @@ public class Board : MonoBehaviour {
 	// 보석들이 종료되는 애니메이션
 	private IEnumerator StopAni()
 	{
+		audioSource_Effect.clip = spinStopSound;
 		// 라인1
 		for(int i = 0; i < 5; i++) {
 			Square_Line_1[i].StopSymbol(Square_Line_1[i].Get_Square_Data());
+			audioSource_Effect.Play();
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인2
 		for(int i = 0; i < 5; i++) {
 			Square_Line_2[i].StopSymbol(Square_Line_2[i].Get_Square_Data());
+			audioSource_Effect.Play();
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인3
 		for(int i = 0; i < 5; i++) {
 			Square_Line_3[i].StopSymbol(Square_Line_3[i].Get_Square_Data());
+			audioSource_Effect.Play();
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인4
 		for(int i = 0; i < 5; i++) {
 			Square_Line_4[i].StopSymbol(Square_Line_4[i].Get_Square_Data());
+			audioSource_Effect.Play();
 			yield return new WaitForSeconds(0.06f);
 		}
 		// 라인5
 		for(int i = 0; i < 5; i++) {
 			Square_Line_5[i].StopSymbol(Square_Line_5[i].Get_Square_Data());
+			audioSource_Effect.Play();
 			yield return new WaitForSeconds(0.06f);
 		}
-		
+		audioSource_Background.Stop();
 		// 라인 애니메이션 실행
 		yield return LineAni();
 		isRun = false;
@@ -169,6 +188,10 @@ public class Board : MonoBehaviour {
 		if(isHas == true) {
 			yield return new WaitForSeconds(0.5f);
 
+			// Win 소리 출력
+			audioSource_Effect.clip = winSound;
+			audioSource_Effect.Play();
+
 			// 해당하는 라인 보여줌
 			for(int i = 0; i < 5; i++) {
 				if(isShow_horizontal[i] == true) {
@@ -193,6 +216,18 @@ public class Board : MonoBehaviour {
 			int get = Money_Return() * GameManager.m.bet_Money_Multi;
 			GameManager.m.creditNum.ChangeNum(GameManager.m.total_Money);
 			earnNum.ChangeNum(get);
+
+			// 숫자 올라가는 소리 출력
+			audioSource_Effect.clip = numberCount_StartSound;
+			audioSource_Effect.Play();
+			yield return new WaitForSecondsRealtime(0.4f);
+			audioSource_Effect.clip = numberCount_EndSound;
+			audioSource_Effect.Play();
+		} else {
+			// Fail 소리 출력
+			// Win 소리 출력
+			audioSource_Effect.clip = failSound;
+			audioSource_Effect.Play();
 		}
 	}
 

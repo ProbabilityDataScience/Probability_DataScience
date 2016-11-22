@@ -21,6 +21,7 @@ public class Square : MonoBehaviour {
 
 	void Start()
 	{
+		//BGM.play
 		endNum = 0;
 		currentSymbolIndex = 0;
 		// DOTween Sequence 초기화

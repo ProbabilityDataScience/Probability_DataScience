@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 //[ExecuteInEditMode]
@@ -33,20 +34,25 @@ public class CustomNumber : MonoBehaviour {
 
 		currentNumber = number;
 		changeText(number);
+
+		StartCoroutine(Update_Time());
 	}
 
-	void Update()
+	private IEnumerator Update_Time()
 	{
-		if(currentNumber != number) {
-			// gap을 더했더니 초과하는 경우
-			if((numberGap > 0 && currentNumber + numberGap >= number) || (numberGap < 0 && currentNumber + numberGap <= number) || numberGap == 0) {
-				// 해당 숫자로 고정
-				currentNumber = number;
-			} else {
-				// 계속 gap을 더함
-				currentNumber += numberGap;
+		while(true) {
+			if(currentNumber != number) {
+				// gap을 더했더니 초과하는 경우
+				if((numberGap > 0 && currentNumber + numberGap >= number) || (numberGap < 0 && currentNumber + numberGap <= number) || numberGap == 0) {
+					// 해당 숫자로 고정
+					currentNumber = number;
+				} else {
+					// 계속 gap을 더함
+					currentNumber += numberGap;
+				}
+				changeText(currentNumber);
 			}
-			changeText(currentNumber);
+			yield return new WaitForSecondsRealtime(0.04f);
 		}
 	}
 
