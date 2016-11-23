@@ -62,19 +62,13 @@ public class InitManager : MonoBehaviour {
 
             network.datas.Add(AccessToken.CurrentAccessToken.UserId); // 토큰값
 
-			//if(DataManager.accountType == "NoData") // 처음 로그인 했는가?
+			if(DataManager.accountType == "NoData") // 처음 로그인 했는가?
 				network.datas.Add("0");
-			//else
-				//network.datas.Add("1");
+			else
+				network.datas.Add("1");
 
 			network.type = RequestType.POST;
 			network.protocol = RequestProtocol.Login;
-<<<<<<< HEAD
-=======
-			network.Request();
->>>>>>> 1a2f8286b6e7f7f0ccd0bb979a825d6dcd5899ef
-
-
 
             // 서버에 정보를 전송하고 돈 정보를 받아옴
             DataManager.currentMoney = network.Proc_Login();
