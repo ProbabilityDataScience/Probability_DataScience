@@ -25,26 +25,34 @@ public class NetworkSession : MonoBehaviour
     string Request()
     {
         HttpWebRequest requestData = CreateRequestData();
-
+		string data;
         switch (type)
         {
             case RequestType.GET:
-                return ReadData(requestData);
+				data = ReadData(requestData);
+				requestData.Abort();
+				GC.Collect();
+				return data;
 
             case RequestType.PUT:
                 WriteData(requestData, CreateJsonData(protocol, datas));
-
-                return "";
+				requestData.Abort();
+				GC.Collect();
+				return "";
 
             case RequestType.POST:
                 WriteData(requestData, CreateJsonData(protocol, datas));
 
-                return ReadData(requestData);
+				data = ReadData(requestData);
+				requestData.Abort();
+				GC.Collect();
+				return data;
 
-            case RequestType.DELETE:
+			case RequestType.DELETE:
                 WriteData(requestData, CreateJsonData(protocol, datas));
-
-                return "";
+				requestData.Abort();
+				GC.Collect();
+				return "";
 
             default:
                 return "";
@@ -55,8 +63,7 @@ public class NetworkSession : MonoBehaviour
     {
         //HttpWebRequest requestData = WebRequest.Create("http://ec2-52-78-108-112.ap-northeast-2.compute.amazonaws.com/Process.php") as HttpWebRequest;
         HttpWebRequest requestData = WebRequest.Create("http://ec2-52-78-108-112.ap-northeast-2.compute.amazonaws.com/Process.php") as HttpWebRequest;
-        //HttpWebRequest requestData = WebRequest.Create("http://localhost/CreateFile.php") as HttpWebRequest;
-
+		//HttpWebRequest requestData = WebRequest.Create("http://localhost/CreateFile.php") as HttpWebRequest;
         requestData.ContentType = "application/json";
 
         switch (type)
@@ -90,16 +97,19 @@ public class NetworkSession : MonoBehaviour
         using (StreamWriter stream = new StreamWriter(requestData.GetRequestStream()))
         {
             stream.WriteLine(jsonData);
-        }
-    }
+			stream.Close();
+		}
+	}
 
     private string ReadData(HttpWebRequest requestData)
     {
         using (HttpWebResponse response = requestData.GetResponse() as HttpWebResponse)
         {
             StreamReader reader = new StreamReader(response.GetResponseStream());
-
-            return reader.ReadToEnd();
+			string d = reader.ReadToEnd();
+			reader.Close();
+			response.Close();
+			return d;
         }
     }
 
