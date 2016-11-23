@@ -69,6 +69,10 @@ public class InitManager : MonoBehaviour {
 
 			network.type = RequestType.POST;
 			network.protocol = RequestProtocol.Login;
+<<<<<<< HEAD
+=======
+			network.Request();
+>>>>>>> 1a2f8286b6e7f7f0ccd0bb979a825d6dcd5899ef
 
 
 
