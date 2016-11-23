@@ -60,16 +60,21 @@ public class GameManager : MonoBehaviour {
 						lineCount++;
 				}
 
-				// 데이터 전송
-				spinBtn.GetComponent<NetworkSession>().datas.Clear();
-				spinBtn.GetComponent<NetworkSession>().datas.Add(DataManager.fbUserID); // 유저 토큰값
-				spinBtn.GetComponent<NetworkSession>().datas.Add(beforeMoney.ToString()); // 돌리기전 돈
-				spinBtn.GetComponent<NetworkSession>().datas.Add(total_Money.ToString()); // 돌리기후 돈
-				spinBtn.GetComponent<NetworkSession>().datas.Add(bet_Money.ToString()); // 배팅금액
-				spinBtn.GetComponent<NetworkSession>().datas.Add(DateTime.Now.ToString()); // 클릭시간
-				spinBtn.GetComponent<NetworkSession>().datas.Add(lineCount.ToString()); // 결과(라인의 수)
-				spinBtn.GetComponent<NetworkSession>().Request();
-			}
+                // 데이터 전송
+                NetworkSession networkSession = spinBtn.GetComponent<NetworkSession>();
+
+                networkSession.protocol = RequestProtocol.SpinButton;
+                networkSession.type = RequestType.PUT;
+
+                networkSession.datas.Clear();
+                networkSession.datas.Add(DataManager.fbUserID); // 유저 토큰값
+                networkSession.datas.Add(beforeMoney.ToString()); // 돌리기전 돈
+                networkSession.datas.Add(total_Money.ToString()); // 돌리기후 돈
+                networkSession.datas.Add(bet_Money.ToString()); // 배팅금액
+                networkSession.datas.Add(DateTime.Now.ToString()); // 클릭시간
+                networkSession.datas.Add(lineCount.ToString()); // 결과(라인의 수)
+                networkSession.Proc_SpinButton();
+            }
 		}
 	}
 
@@ -122,10 +127,16 @@ public class GameManager : MonoBehaviour {
 			}
 			betNum.ChangeNum(bet_Money);
 		}
-		// 데이터 전송
-		betBtn.GetComponent<NetworkSession>().datas.Clear();
-		betBtn.GetComponent<NetworkSession>().datas.Add(DataManager.fbUserID);
-		betBtn.GetComponent<NetworkSession>().datas.Add(DateTime.Now.ToString());
-		spinBtn.GetComponent<NetworkSession>().Request();
-	}
+
+        //// 데이터 전송
+        NetworkSession networkSession = betBtn.GetComponent<NetworkSession>();
+
+        networkSession.protocol = RequestProtocol.BattingButton;
+        networkSession.type = RequestType.PUT;
+
+        networkSession.datas.Clear();
+       networkSession.datas.Add(DataManager.fbUserID);
+       networkSession.datas.Add(DateTime.Now.ToString());
+       networkSession.Proc_BettingButton();
+    }
 }

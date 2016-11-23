@@ -11,12 +11,12 @@
 //$key = array_shift($request);
 
 require ("Login.php");
+require ("SpinButton.php");
 
 class Protocol {
     static public $Login  = 0;
-    static public $blue = 1;
-    static public $gary = 3;
-    static public $aqua = 4;
+    static public $SpinButton = 1;
+    static public $BettingButton = 2;
 }
 
 error_reporting(E_ALL&~E_NOTICE&~E_WARNING);
@@ -27,9 +27,22 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 
 $protocol = $jsonData["protocol"];
 
-if($protocol === Protocol::$Login)
+switch ($protocol)
 {
-    LoginProcess($jsonData["datas"]);
+    case Protocol::$Login :
+        LoginProcess($jsonData["datas"]);
+
+        break;
+
+    case Protocol::$SpinButton :
+        SpinButtonProtocol($jsonData["datas"]);
+
+        break;
+
+    case Protocol::$BettingButton :
+        //LoginProcess($jsonData["datas"]);
+
+        break;
 }
 
 $result = "protocol : ";

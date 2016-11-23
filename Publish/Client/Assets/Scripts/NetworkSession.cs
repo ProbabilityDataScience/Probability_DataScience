@@ -2,84 +2,130 @@
 using System.Net;
 using System.IO;
 using System.Collections.Generic;
+using System;
+using System.Linq;
+using System.Collections;
+
 
 public enum RequestType { GET, PUT, POST, DELETE };
 
+public class NetworkSession : MonoBehaviour
+{
 
-public class NetworkSession : MonoBehaviour {
-    
     public RequestType type;
     public RequestProtocol protocol;
     public List<string> datas;
 
-    private HttpWebRequest webRequest;
-
     // Use this for initialization
-    void Start () {
-        //webRequest = WebRequest.Create("http://localhost/Process.php") as HttpWebRequest;
-        webRequest = WebRequest.Create("http://ec2-52-78-108-112.ap-northeast-2.compute.amazonaws.com/Process.php") as HttpWebRequest;
-        
-        webRequest.ContentType = "application/json";
+    void Start()
+    {
+
     }
 
-    public void Request()
+    string Request()
     {
+        HttpWebRequest requestData = CreateRequestData();
+
         switch (type)
         {
             case RequestType.GET:
-                webRequest.Method = "GET";
+                return ReadData(requestData);
+
+            case RequestType.PUT:
+                WriteData(requestData, CreateJsonData(protocol, datas));
+
+                return "";
+
+            case RequestType.POST:
+                WriteData(requestData, CreateJsonData(protocol, datas));
+
+                return ReadData(requestData);
+
+            case RequestType.DELETE:
+                WriteData(requestData, CreateJsonData(protocol, datas));
+
+                return "";
+
+            default:
+                return "";
+        }
+    }
+
+    private HttpWebRequest CreateRequestData()
+    {
+        //HttpWebRequest requestData = WebRequest.Create("http://ec2-52-78-108-112.ap-northeast-2.compute.amazonaws.com/Process.php") as HttpWebRequest;
+        HttpWebRequest requestData = WebRequest.Create("http://ec2-52-78-108-112.ap-northeast-2.compute.amazonaws.com/Process.php") as HttpWebRequest;
+        //HttpWebRequest requestData = WebRequest.Create("http://localhost/CreateFile.php") as HttpWebRequest;
+
+        requestData.ContentType = "application/json";
+
+        switch (type)
+        {
+            case RequestType.GET:
+                requestData.Method = "GET";
 
                 break;
 
             case RequestType.PUT:
-                webRequest.Method = "PUT";
-                WriteData(CreateJsonData(protocol, datas));
+                requestData.Method = "PUT";
 
                 break;
 
             case RequestType.POST:
-                webRequest.Method = "POST";
-                WriteData(CreateJsonData(protocol, datas));
+                requestData.Method = "POST";
+
                 break;
 
-
             case RequestType.DELETE:
-                webRequest.Method = "DELETE";
-                WriteData(CreateJsonData(protocol, datas));
+                requestData.Method = "DELETE";
 
                 break;
         }
+
+        return requestData;
     }
 
-    private void WriteData(string jsonData)
+    private void WriteData(HttpWebRequest requestData, string jsonData)
     {
-        using (StreamWriter stream = new StreamWriter(webRequest.GetRequestStream()))
+        using (StreamWriter stream = new StreamWriter(requestData.GetRequestStream()))
         {
             stream.WriteLine(jsonData);
         }
     }
-    // Datas 안들어감
-    public DataClass ReadData()
+
+    private string ReadData(HttpWebRequest requestData)
     {
-        using (HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse)
+        using (HttpWebResponse response = requestData.GetResponse() as HttpWebResponse)
         {
             StreamReader reader = new StreamReader(response.GetResponseStream());
 
-			string d = reader.ReadToEnd();
-			Debug.Log(d);
-
-			DataClass dc = JsonUtility.FromJson<DataClass>(d);
-
-			return dc;
+            return reader.ReadToEnd();
         }
     }
 
     private string CreateJsonData(RequestProtocol protocol, List<string> datas)
     {
         DataClass test = new DataClass(protocol, datas);
-
         print(JsonUtility.ToJson(test, prettyPrint: true));
+        return JsonUtility.ToJson(test, prettyPrint: true);
+    }
 
-        return JsonUtility.ToJson(test, prettyPrint:true);
+    public int Proc_Login()
+    {
+        string result = Request();
+
+        print(result);
+
+        return Convert.ToInt32(result);
+    }
+
+    public void Proc_SpinButton()
+    {
+        Request();
+    }
+
+    public void Proc_BettingButton()
+    {
+        Request();
     }
 }

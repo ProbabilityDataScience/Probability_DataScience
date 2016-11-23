@@ -5,67 +5,102 @@ using System.Collections.Generic;
 
 public enum RequestType { GET, PUT, POST, DELETE };
 
-
 public class NetworkSession : MonoBehaviour {
     
     public RequestType type;
     public RequestProtocol protocol;
     public List<string> datas;
 
-    private HttpWebRequest webRequest;
-
     // Use this for initialization
     void Start () {
-        //webRequest = WebRequest.Create("http://localhost/Process.php") as HttpWebRequest;
-        webRequest = WebRequest.Create("http://ec2-52-78-108-112.ap-northeast-2.compute.amazonaws.com/Process.php") as HttpWebRequest;
         
-        webRequest.ContentType = "application/json";
     }
 
-    public void Request()
+    public void Data_Proc()
     {
+        switch (protocol)
+        {
+            case RequestProtocol.Test:
+
+                int money = 0;
+
+                Proc_Login(Request(), ref money);
+
+                break;
+        }
+    }
+
+    string Request()
+    {
+        HttpWebRequest requestData = CreateRequestData();
+
         switch (type)
         {
             case RequestType.GET:
-                webRequest.Method = "GET";
+                return ReadData(requestData);
 
-                print(ReadData());
+            case RequestType.PUT:
+                WriteData(requestData, CreateJsonData(protocol, datas));
+
+                return "";
+
+            case RequestType.POST:
+                WriteData(requestData, CreateJsonData(protocol, datas));
+
+                return ReadData(requestData);
+
+            case RequestType.DELETE:
+                WriteData(requestData, CreateJsonData(protocol, datas));
+
+                return "";          
+
+            default:
+                return "";
+        }
+    }
+
+    private HttpWebRequest CreateRequestData()
+    {
+        HttpWebRequest requestData = WebRequest.Create("http://ec2-52-78-108-112.ap-northeast-2.compute.amazonaws.com/Process.php") as HttpWebRequest;
+        requestData.ContentType = "application/json";
+
+        switch (type)
+        {
+            case RequestType.GET:
+                requestData.Method = "GET";
 
                 break;
 
-            case RequestType.PUT:
-                webRequest.Method = "PUT";
-                WriteData(CreateJsonData(protocol, datas));
+            case RequestType.PUT:      
+                requestData.Method = "PUT";
 
                 break;
 
             case RequestType.POST:
-                webRequest.Method = "POST";
-                WriteData(CreateJsonData(protocol, datas));
-                print(ReadData());
+                requestData.Method = "POST";
 
                 break;
 
-
             case RequestType.DELETE:
-                webRequest.Method = "DELETE";
-                WriteData(CreateJsonData(protocol, datas));
+                requestData.Method = "DELETE";
 
                 break;
         }
+
+        return requestData;
     }
 
-    private void WriteData(string jsonData)
+    private void WriteData(HttpWebRequest requestData, string jsonData)
     {
-        using (StreamWriter stream = new StreamWriter(webRequest.GetRequestStream()))
+        using (StreamWriter stream = new StreamWriter(requestData.GetRequestStream()))
         {
             stream.WriteLine(jsonData);
         }
     }
-    // Datas 안들어감
-    private string ReadData()
+
+    private string ReadData(HttpWebRequest requestData)
     {
-        using (HttpWebResponse response = webRequest.GetResponse() as HttpWebResponse)
+        using (HttpWebResponse response = requestData.GetResponse() as HttpWebResponse)
         {
             StreamReader reader = new StreamReader(response.GetResponseStream());
 
@@ -78,5 +113,11 @@ public class NetworkSession : MonoBehaviour {
         DataClass test = new DataClass(protocol, datas);
         print(JsonUtility.ToJson(test, prettyPrint: true));
         return JsonUtility.ToJson(test, prettyPrint:true);
+    }
+
+    public void Proc_Login(string jsonData, ref int money)
+    {
+        Proc_LoginData data = JsonUtility.FromJson<Proc_LoginData>(jsonData);
+        print(data.money);
     }
 }

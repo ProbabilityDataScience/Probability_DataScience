@@ -57,22 +57,26 @@ public class InitManager : MonoBehaviour {
 			Debug.Log("Successful login with facebook");
 			Debug.Log("TokenID : " + AccessToken.CurrentAccessToken.UserId);
 
-			// 서버로 로그인 보내줌
-			network.datas.Add(AccessToken.CurrentAccessToken.UserId); // 토큰값
-			if(DataManager.accountType == "NoData") // 처음 로그인 했는가?
-				network.datas.Add("Yes");
-			else
-				network.datas.Add("No");
+            // 서버로 로그인 보내줌
+            network.datas.Clear();
+
+            network.datas.Add(AccessToken.CurrentAccessToken.UserId); // 토큰값
+
+			//if(DataManager.accountType == "NoData") // 처음 로그인 했는가?
+				network.datas.Add("0");
+			//else
+				//network.datas.Add("1");
+
 			network.type = RequestType.POST;
 			network.protocol = RequestProtocol.Login;
-			//network.Request();
 
-			// 돈 정보를 받아옴
-			//DataManager.currentMoney = int.Parse(network.ReadData().datas[0]);
-			DataManager.currentMoney = 100000;
 
-			// 계정 정보를 Facebook으로 하고 저장
-			DataManager.accountType = "Facebook";
+
+            // 서버에 정보를 전송하고 돈 정보를 받아옴
+            DataManager.currentMoney = network.Proc_Login();
+
+            // 계정 정보를 Facebook으로 하고 저장
+            DataManager.accountType = "Facebook";
 			DataManager.fbUserID = AccessToken.CurrentAccessToken.UserId;
 			DataManager.SaveAccountData();
 
